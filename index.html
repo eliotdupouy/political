@@ -48,6 +48,32 @@
       opacity: 0.85;
     }
 
+    header nav {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    header nav a {
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(226, 232, 240, 0.08);
+      background: rgba(15, 23, 42, 0.55);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    header nav a:hover {
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
     main {
       display: grid;
       gap: 1.5rem;
@@ -62,6 +88,30 @@
       border-radius: 16px;
       padding: 1.25rem 1.5rem;
       box-shadow: 0 12px 24px rgba(8, 47, 73, 0.35);
+    }
+
+    .board-grid {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      margin-top: 1rem;
+    }
+
+    .board-card {
+      background: rgba(8, 18, 36, 0.9);
+      border: 1px solid rgba(226, 232, 240, 0.08);
+      border-radius: 14px;
+      padding: 1rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .board-card h3 {
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 1rem;
     }
 
     h2 {
@@ -294,6 +344,135 @@
       gap: 0.4rem;
     }
 
+    .tax-grid {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .tax-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .tax-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .tax-row span {
+      flex: 1;
+    }
+
+    .tax-controls {
+      display: inline-flex;
+      gap: 0.35rem;
+      align-items: center;
+    }
+
+    .tax-summary {
+      font-size: 0.8rem;
+      opacity: 0.75;
+      padding: 0.5rem 0.65rem;
+      border-radius: 10px;
+      background: rgba(148, 163, 184, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.18);
+    }
+
+    .parliament-grid {
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .parliament-party {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .seat-bar {
+      grid-column: span 2;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(226, 232, 240, 0.08);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .seat-bar span {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+    }
+
+    .parliament-meta {
+      font-size: 0.75rem;
+      opacity: 0.75;
+    }
+
+    .map-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    #world-map {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.05), rgba(15, 23, 42, 0.65));
+      border: 1px solid rgba(56, 189, 248, 0.1);
+    }
+
+    .country-shape {
+      fill: rgba(148, 163, 184, 0.35);
+      stroke: rgba(226, 232, 240, 0.2);
+      stroke-width: 1;
+      cursor: pointer;
+      transition: fill 0.2s ease, stroke 0.2s ease;
+    }
+
+    .country-shape:hover {
+      fill: rgba(56, 189, 248, 0.5);
+      stroke: rgba(56, 189, 248, 0.85);
+    }
+
+    .country-shape.selected {
+      fill: rgba(249, 115, 22, 0.55);
+      stroke: rgba(249, 115, 22, 0.9);
+    }
+
+    #country-details {
+      font-size: 0.85rem;
+      line-height: 1.5;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid rgba(56, 189, 248, 0.12);
+      border-radius: 12px;
+      padding: 0.75rem;
+    }
+
+    #country-details h4 {
+      margin: 0 0 0.35rem;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+    }
+
+    #country-details dl {
+      margin: 0.5rem 0 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.35rem 0.5rem;
+      font-size: 0.75rem;
+    }
+
+    #country-details dd {
+      margin: 0;
+    }
+
     @media (max-width: 700px) {
       header h1 {
         font-size: 1.7rem;
@@ -301,6 +480,10 @@
 
       section {
         padding: 1rem;
+      }
+
+      header nav {
+        gap: 0.5rem;
       }
 
       button {
@@ -313,6 +496,14 @@
   <header>
     <h1>Strategic Statecraft</h1>
     <p>Turn-based political and military strategy for web browsers. Manage your nation, negotiate with allies, and wage wars in shared rooms with friends.</p>
+    <nav>
+      <a href="#room-setup">Rooms</a>
+      <a href="#player-management">Leaders</a>
+      <a href="#game-board">Dashboard</a>
+      <a href="#parliament-card">Parliament</a>
+      <a href="#world-map-card">World Map</a>
+      <a href="#event-feed">Events</a>
+    </nav>
   </header>
 
   <main>
@@ -358,6 +549,7 @@
       </div>
       <div class="inline-actions" style="margin-top: 0.75rem;">
         <button id="add-player" class="success">Add Leader</button>
+        <button id="auto-fill" class="secondary">Auto Fill Leaders</button>
         <button id="start-game">Launch Simulation</button>
       </div>
       <div id="player-list" style="margin-top: 1rem;"></div>
@@ -366,17 +558,22 @@
     <section id="game-board" class="hidden">
       <h2><span>03</span> National Dashboard</h2>
       <p style="margin-top: 0; font-size: 0.85rem; opacity: 0.75;">Turn <strong id="turn-display">1</strong> — Active Leader: <strong id="active-leader">-</strong></p>
-      <div class="grid two">
-        <div>
-          <h3 style="margin-top: 0; text-transform: uppercase; letter-spacing: 0.05em;">Key Metrics</h3>
+      <div class="board-grid">
+        <div class="board-card" id="economy-card">
+          <h3>Economic Overview</h3>
           <ul class="metric-list" id="metrics"></ul>
-          <div class="budgets" style="margin-top: 1rem;">
-            <h3 style="margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Budget Allocations</h3>
+          <div class="budgets">
+            <h4 style="margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Budget Allocations</h4>
             <div id="budget-list"></div>
           </div>
+          <div class="tax-menu">
+            <h4 style="margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Taxation</h4>
+            <div id="tax-list" class="tax-grid"></div>
+            <div id="tax-revenue" class="tax-summary"></div>
+          </div>
         </div>
-        <div>
-          <h3 style="margin-top: 0; text-transform: uppercase; letter-spacing: 0.05em;">Actions</h3>
+        <div class="board-card" id="actions-card">
+          <h3>Executive Actions</h3>
           <div class="grid">
             <div>
               <h4 style="margin: 0 0 0.5rem;">Domestic Policies</h4>
@@ -401,6 +598,25 @@
             </div>
           </div>
         </div>
+        <div class="board-card" id="parliament-card">
+          <h3>Parliament</h3>
+          <p class="parliament-meta" id="parliament-summary"></p>
+          <div id="parliament-composition" class="parliament-grid"></div>
+        </div>
+        <div class="board-card" id="world-map-card">
+          <h3>World Map</h3>
+          <div class="map-wrapper">
+            <svg id="world-map" viewBox="0 0 800 400" role="img" aria-labelledby="map-title">
+              <title id="map-title">Global theatre overview</title>
+              <path class="country-shape" data-name="Auroran Union" d="M140 110 L240 95 L310 140 L290 200 L200 210 L150 180 Z"></path>
+              <path class="country-shape" data-name="Maridian Collective" d="M330 170 L420 150 L470 190 L460 250 L360 260 L320 210 Z"></path>
+              <path class="country-shape" data-name="Solis Republic" d="M480 120 L600 110 L640 160 L600 210 L500 200 Z"></path>
+              <path class="country-shape" data-name="Nordhavn Pact" d="M220 40 L340 30 L360 80 L300 110 L230 90 Z"></path>
+              <path class="country-shape" data-name="Kestrel Dominion" d="M520 230 L640 240 L690 300 L620 330 L500 300 Z"></path>
+            </svg>
+            <div id="country-details"></div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -416,6 +632,104 @@
   </main>
 
   <script>
+    const nations = [
+      {
+        id: "auroran",
+        name: "Auroran Union",
+        leader: "Chancellor Selene Vega",
+        ideology: "Social Democracy",
+        capital: "Helios Prime",
+        population: 92,
+        gdp: 3200,
+        military: 480,
+        strength: 260,
+        color: "#38bdf8",
+        description: "A high-tech federation focused on social welfare and orbital trade routes.",
+        taxes: { income: 28, corporate: 24, tariffs: 10 },
+        parliament: [
+          { name: "Progress Alliance", seats: 210, color: "#38bdf8" },
+          { name: "Civic Union", seats: 90, color: "#94a3b8" },
+          { name: "Renewal Greens", seats: 50, color: "#4ade80" }
+        ]
+      },
+      {
+        id: "maridian",
+        name: "Maridian Collective",
+        leader: "Coordinator Imre Kade",
+        ideology: "Technocrat",
+        capital: "Axis City",
+        population: 74,
+        gdp: 2800,
+        military: 420,
+        strength: 220,
+        color: "#a855f7",
+        description: "A data-driven council state that leverages megacities and automation.",
+        taxes: { income: 24, corporate: 26, tariffs: 12 },
+        parliament: [
+          { name: "Systems Forum", seats: 180, color: "#a855f7" },
+          { name: "Urban Bloc", seats: 110, color: "#38bdf8" },
+          { name: "Liberty Front", seats: 60, color: "#f97316" }
+        ]
+      },
+      {
+        id: "solis",
+        name: "Solis Republic",
+        leader: "President Darius Holt",
+        ideology: "Liberal",
+        capital: "Radiant Bay",
+        population: 105,
+        gdp: 3600,
+        military: 510,
+        strength: 300,
+        color: "#fbbf24",
+        description: "A coastal republic championing free markets and maritime supremacy.",
+        taxes: { income: 22, corporate: 18, tariffs: 6 },
+        parliament: [
+          { name: "Liberty Coalition", seats: 160, color: "#fbbf24" },
+          { name: "Civic Moderates", seats: 120, color: "#38bdf8" },
+          { name: "People's Assembly", seats: 70, color: "#ef4444" }
+        ]
+      },
+      {
+        id: "nordhavn",
+        name: "Nordhavn Pact",
+        leader: "Marshal Anika Rykov",
+        ideology: "Conservative",
+        capital: "Frostholm",
+        population: 68,
+        gdp: 2500,
+        military: 460,
+        strength: 280,
+        color: "#60a5fa",
+        description: "An arctic alliance prioritising defense industries and resource security.",
+        taxes: { income: 26, corporate: 22, tariffs: 14 },
+        parliament: [
+          { name: "Order League", seats: 190, color: "#60a5fa" },
+          { name: "Frontier Party", seats: 100, color: "#f97316" },
+          { name: "Labor Syndicate", seats: 60, color: "#ef4444" }
+        ]
+      },
+      {
+        id: "kestrel",
+        name: "Kestrel Dominion",
+        leader: "Regent Maia Corvo",
+        ideology: "Authoritarian",
+        capital: "Ironspire",
+        population: 88,
+        gdp: 3000,
+        military: 540,
+        strength: 240,
+        color: "#f97316",
+        description: "An expansionist regime controlling key desert trade corridors.",
+        taxes: { income: 30, corporate: 28, tariffs: 18 },
+        parliament: [
+          { name: "Dominion Council", seats: 150, color: "#f97316" },
+          { name: "Security Directorate", seats: 130, color: "#ef4444" },
+          { name: "Meridian Forum", seats: 70, color: "#38bdf8" }
+        ]
+      }
+    ];
+
     const policyActions = [
       {
         id: "raiseTaxes",
@@ -503,13 +817,7 @@
       }
     ];
 
-    const worldPowers = [
-      { name: "Auroran Union", strength: 260 },
-      { name: "Maridian Collective", strength: 220 },
-      { name: "Solis Republic", strength: 300 },
-      { name: "Nordhavn Pact", strength: 280 },
-      { name: "Kestrel Dominion", strength: 240 }
-    ];
+    const worldPowers = nations.map(({ name, strength }) => ({ name, strength }));
 
     const roomElements = {
       roomCode: document.getElementById("room-code"),
@@ -519,6 +827,7 @@
       resetRoom: document.getElementById("reset-room"),
       playerManagement: document.getElementById("player-management"),
       addPlayer: document.getElementById("add-player"),
+      autoFill: document.getElementById("auto-fill"),
       playerList: document.getElementById("player-list"),
       startGame: document.getElementById("start-game"),
       newPlayerName: document.getElementById("new-player-name"),
@@ -528,6 +837,8 @@
       activeLeader: document.getElementById("active-leader"),
       metrics: document.getElementById("metrics"),
       budgetList: document.getElementById("budget-list"),
+      taxList: document.getElementById("tax-list"),
+      taxRevenue: document.getElementById("tax-revenue"),
       policyActions: document.getElementById("policy-actions"),
       warTargets: document.getElementById("war-targets"),
       deployTroops: document.getElementById("deploy-troops"),
@@ -537,12 +848,17 @@
       warStatus: document.getElementById("war-status"),
       activeWars: document.getElementById("active-wars"),
       eventFeed: document.getElementById("event-feed"),
-      eventLog: document.getElementById("event-log")
+      eventLog: document.getElementById("event-log"),
+      parliamentSummary: document.getElementById("parliament-summary"),
+      parliamentComposition: document.getElementById("parliament-composition"),
+      worldMap: document.getElementById("world-map"),
+      countryDetails: document.getElementById("country-details")
     };
 
     let rooms = loadRooms();
     let currentRoom = null;
     let currentPlayerIndex = 0;
+    let selectedCountry = null;
 
     function loadRooms() {
       try {
@@ -564,19 +880,25 @@
       return `leader-${Math.random().toString(36).slice(2, 11)}`;
     }
 
-    function createBasePlayer(name, ideology) {
+    function createBasePlayer(name, ideology, nation = null) {
+      const baseGDP = nation?.gdp ?? 2200;
+      const baseMilitary = nation?.military ?? 420;
+      const startingTreasury = Math.round(baseGDP * 0.28);
       return {
         id: generateId(),
         name,
         ideology,
-        treasury: 650,
-        gdp: 2200,
+        country: nation ? nation.name : null,
+        treasury: startingTreasury,
+        gdp: baseGDP,
         approval: 55,
         stability: 60,
-        military: 420,
+        military: baseMilitary,
         research: 30,
         warWeariness: 0,
         wars: [],
+        taxes: cloneTaxes(nation?.taxes || defaultTaxes(ideology)),
+        parliament: cloneParliament(nation?.parliament || generateParliament(ideology)),
         budgets: {
           welfare: 25,
           defense: 25,
@@ -586,11 +908,132 @@
       };
     }
 
+    function defaultTaxes(ideology) {
+      const presets = {
+        "Social Democracy": { income: 30, corporate: 24, tariffs: 8 },
+        Liberal: { income: 22, corporate: 18, tariffs: 6 },
+        Conservative: { income: 26, corporate: 22, tariffs: 12 },
+        Nationalist: { income: 27, corporate: 24, tariffs: 16 },
+        Technocrat: { income: 25, corporate: 25, tariffs: 10 },
+        Ecologist: { income: 28, corporate: 20, tariffs: 9 },
+        Authoritarian: { income: 32, corporate: 28, tariffs: 18 }
+      };
+      return presets[ideology] || { income: 25, corporate: 22, tariffs: 10 };
+    }
+
+    function cloneTaxes(taxes) {
+      return {
+        income: taxes.income ?? 25,
+        corporate: taxes.corporate ?? 22,
+        tariffs: taxes.tariffs ?? 10
+      };
+    }
+
+    function cloneParliament(parliament) {
+      return parliament.map((party, index) => ({
+        name: party.name || `Bloc ${index + 1}`,
+        seats: party.seats ?? 0,
+        color: party.color || "#38bdf8"
+      }));
+    }
+
+    function generateParliament(ideology) {
+      const templates = {
+        "Social Democracy": [
+          { name: "Social Justice Bloc", seats: 180, color: "#38bdf8" },
+          { name: "Labor Cooperative", seats: 110, color: "#f97316" },
+          { name: "Civic Independents", seats: 60, color: "#94a3b8" }
+        ],
+        Liberal: [
+          { name: "Liberty Party", seats: 170, color: "#facc15" },
+          { name: "Unity Coalition", seats: 120, color: "#38bdf8" },
+          { name: "People's Forum", seats: 60, color: "#22c55e" }
+        ],
+        Conservative: [
+          { name: "Order League", seats: 190, color: "#60a5fa" },
+          { name: "Traditional Front", seats: 110, color: "#f97316" },
+          { name: "Workers Compact", seats: 50, color: "#ef4444" }
+        ],
+        Nationalist: [
+          { name: "Homeland Guard", seats: 200, color: "#f97316" },
+          { name: "Unity Circle", seats: 110, color: "#38bdf8" },
+          { name: "Liberty Bloc", seats: 40, color: "#facc15" }
+        ],
+        Technocrat: [
+          { name: "Systems Forum", seats: 180, color: "#a855f7" },
+          { name: "Innovation League", seats: 120, color: "#38bdf8" },
+          { name: "Civic Guild", seats: 50, color: "#facc15" }
+        ],
+        Ecologist: [
+          { name: "Green Assembly", seats: 170, color: "#22c55e" },
+          { name: "Civic Alliance", seats: 120, color: "#38bdf8" },
+          { name: "Earth Vanguard", seats: 60, color: "#a855f7" }
+        ],
+        Authoritarian: [
+          { name: "Dominion Council", seats: 180, color: "#f97316" },
+          { name: "Security Directorate", seats: 130, color: "#ef4444" },
+          { name: "Industrial League", seats: 50, color: "#38bdf8" }
+        ]
+      };
+      const template = templates[ideology];
+      if (template) {
+        return cloneParliament(template);
+      }
+      const total = 350;
+      const leading = Math.round(total * 0.48);
+      const second = Math.round(total * 0.32);
+      return [
+        { name: `${ideology} Coalition`, seats: leading, color: "#38bdf8" },
+        { name: "Opposition Alliance", seats: second, color: "#f97316" },
+        { name: "Regional Caucus", seats: total - leading - second, color: "#94a3b8" }
+      ];
+    }
+
+    function ensurePlayerUpToDate(player) {
+      if (!player) return;
+      if (!player.budgets) {
+        player.budgets = { welfare: 25, defense: 25, economy: 30, diplomacy: 20 };
+      } else {
+        player.budgets.welfare = player.budgets.welfare ?? 25;
+        player.budgets.defense = player.budgets.defense ?? 25;
+        player.budgets.economy = player.budgets.economy ?? 30;
+        player.budgets.diplomacy = player.budgets.diplomacy ?? 20;
+      }
+      if (!player.taxes) {
+        player.taxes = cloneTaxes(defaultTaxes(player.ideology));
+      }
+      if (!player.parliament || !player.parliament.length) {
+        player.parliament = cloneParliament(generateParliament(player.ideology));
+      }
+      if (!player.country) {
+        const fallbackNation = findAvailableNation(player.ideology);
+        if (fallbackNation) {
+          player.country = fallbackNation.name;
+        }
+      }
+      if (typeof player.treasury !== "number") {
+        player.treasury = 650;
+      }
+      if (typeof player.gdp !== "number") {
+        player.gdp = 2200;
+      }
+      if (typeof player.military !== "number") {
+        player.military = 420;
+      }
+    }
+
     function hydrateRoom(code) {
       const room = rooms[code];
       if (!room) return null;
       currentRoom = room;
       currentPlayerIndex = room.activePlayerIndex || 0;
+      selectedCountry = null;
+      if (currentRoom.players) {
+        currentRoom.players.forEach(ensurePlayerUpToDate);
+        persistRooms();
+      }
+      currentRoom.log = currentRoom.log || [];
+      currentRoom.turn = currentRoom.turn || 1;
       updateVisibility();
       renderRoom();
       log(`Joined room ${code}.`);
@@ -615,7 +1058,9 @@
           alert("Room code already exists. Choose another.");
           return;
         }
-        const player = createBasePlayer(leaderName, "Social Democracy");
+        const initialNation = getNationByLeaderName(leaderName) || nations[0] || null;
+        const ideology = initialNation?.ideology || "Social Democracy";
+        const player = createBasePlayer(leaderName, ideology, initialNation);
         rooms[code] = {
           code,
           players: [player],
@@ -637,7 +1082,10 @@
         hydrateRoom(code);
         const exists = currentRoom.players.some((p) => p.name.toLowerCase() === leaderName.toLowerCase());
         if (!exists) {
-          const newPlayer = createBasePlayer(leaderName, "Liberal");
+          const preferredNation = getNationByLeaderName(leaderName);
+          const availableNation = !preferredNation || isNationAssigned(preferredNation.name) ? findAvailableNation("Liberal") : preferredNation;
+          const ideology = availableNation?.ideology || "Liberal";
+          const newPlayer = createBasePlayer(leaderName, ideology, availableNation);
           currentRoom.players.push(newPlayer);
           persistRooms();
           renderRoom();
@@ -650,11 +1098,13 @@
       if (!currentRoom) return;
       roomElements.playerList.innerHTML = "";
       currentRoom.players.forEach((player, index) => {
+        ensurePlayerUpToDate(player);
         const card = document.createElement("div");
         card.className = "player-card" + (index === currentPlayerIndex ? " active" : "");
         card.innerHTML = `
           <h3>${player.name} <span class="tag">${player.ideology}</span></h3>
           <dl>
+            <dt>Country</dt><dd>${player.country || "Unassigned"}</dd>
             <dt>Treasury</dt><dd>${player.treasury}</dd>
             <dt>GDP</dt><dd>${player.gdp}</dd>
             <dt>Approval</dt><dd>${player.approval}%</dd>
@@ -682,10 +1132,12 @@
     function renderGameBoard() {
       if (!currentRoom || !currentRoom.started) return;
       const player = getActivePlayer();
+      ensurePlayerUpToDate(player);
       roomElements.turnDisplay.textContent = currentRoom.turn;
       roomElements.activeLeader.textContent = player.name;
       roomElements.metrics.innerHTML = "";
 
+      const taxBreakdown = calculateTaxBreakdown(player);
       const metrics = [
         { label: "Treasury", value: `${player.treasury.toLocaleString()} cr` },
         { label: "GDP", value: `${player.gdp.toLocaleString()} cr` },
@@ -693,7 +1145,9 @@
         { label: "Stability", value: `${Math.max(0, Math.min(100, player.stability))}%` },
         { label: "Military Strength", value: player.military },
         { label: "Research", value: player.research },
-        { label: "War Weariness", value: player.warWeariness }
+        { label: "War Weariness", value: player.warWeariness },
+        { label: "Tax Revenue", value: `${taxBreakdown.total.toLocaleString()} cr` },
+        { label: "Country", value: player.country || "Unassigned" }
       ];
 
       metrics.forEach((metric) => {
@@ -703,8 +1157,11 @@
       });
 
       renderBudgets(player);
+      renderTaxMenu(player, taxBreakdown);
       renderPolicies();
       renderWarTargets(player);
+      renderParliament(player);
+      renderWorldMap(player);
       renderWarStatus();
       renderEventLog();
     }
@@ -733,6 +1190,77 @@
       });
     }
 
+    function calculateTaxBreakdown(player) {
+      ensurePlayerUpToDate(player);
+      const base = player.gdp;
+      const income = Math.round(base * (player.taxes.income / 100) * 0.22);
+      const corporate = Math.round(base * (player.taxes.corporate / 100) * 0.18);
+      const tariffs = Math.round(base * (player.taxes.tariffs / 100) * 0.1);
+      return {
+        income,
+        corporate,
+        tariffs,
+        total: income + corporate + tariffs
+      };
+    }
+
+    function renderTaxMenu(player, breakdown = null) {
+      roomElements.taxList.innerHTML = "";
+      const taxData = [
+        { key: "income", label: "Income Tax" },
+        { key: "corporate", label: "Corporate Tax" },
+        { key: "tariffs", label: "Tariffs" }
+      ];
+      const resolved = breakdown || calculateTaxBreakdown(player);
+      taxData.forEach(({ key, label }) => {
+        const row = document.createElement("div");
+        row.className = "tax-row";
+        row.innerHTML = `
+          <span>${label}</span>
+          <div class="tax-controls">
+            <button data-tax="${key}" data-delta="-1" class="secondary">-</button>
+            <strong>${player.taxes[key]}%</strong>
+            <button data-tax="${key}" data-delta="1" class="secondary">+</button>
+          </div>
+          <small>${resolved[key].toLocaleString()} cr</small>
+        `;
+        roomElements.taxList.appendChild(row);
+      });
+
+      roomElements.taxList.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.getAttribute("data-tax");
+          const delta = Number(button.getAttribute("data-delta"));
+          adjustTaxRate(key, delta);
+        });
+      });
+
+      roomElements.taxRevenue.textContent = `Projected quarterly revenue: ${resolved.total.toLocaleString()} credits`;
+    }
+
+    function adjustTaxRate(key, delta) {
+      const player = getActivePlayer();
+      if (!player || !Object.prototype.hasOwnProperty.call(player.taxes, key)) return;
+      const newValue = Math.max(5, Math.min(60, player.taxes[key] + delta));
+      if (newValue === player.taxes[key]) {
+        log(`${key} tax rate is already at its limit.`);
+        renderEventLog();
+        return;
+      }
+      player.taxes[key] = newValue;
+      if (delta > 0) {
+        player.approval -= 1;
+        player.stability -= 0;
+      } else {
+        player.approval += 1;
+      }
+      clampPlayerStats(player);
+      persistRooms();
+      renderGameBoard();
+      log(`${player.name} adjusted ${key} taxes to ${newValue}%.`);
+      renderEventLog();
+    }
+
     function renderPolicies() {
       roomElements.policyActions.innerHTML = "";
       policyActions.forEach((action) => {
@@ -742,6 +1270,127 @@
         button.addEventListener("click", () => handlePolicy(action));
         roomElements.policyActions.appendChild(button);
       });
+    }
+
+    function renderParliament(player) {
+      const parliament = [...player.parliament].sort((a, b) => b.seats - a.seats);
+      const totalSeats = parliament.reduce((sum, party) => sum + party.seats, 0);
+      const majority = Math.floor(totalSeats / 2) + 1;
+      roomElements.parliamentComposition.innerHTML = "";
+      roomElements.parliamentSummary.textContent = `${player.country || player.name}'s legislature: ${totalSeats} seats • Majority ${majority}`;
+      parliament.forEach((party) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "parliament-party";
+        const seatShare = totalSeats ? Math.round((party.seats / totalSeats) * 100) : 0;
+        wrapper.innerHTML = `
+          <strong>${party.name}</strong>
+          <span>${party.seats} seats</span>
+          <div class="seat-bar"><span style="width: ${seatShare}%; background: ${party.color};"></span></div>
+        `;
+        roomElements.parliamentComposition.appendChild(wrapper);
+      });
+    }
+
+    function renderWorldMap(player) {
+      const focus = selectedCountry || player.country || null;
+      highlightCountry(focus);
+      updateCountryDetails(focus, player);
+    }
+
+    function highlightCountry(name) {
+      if (!roomElements.worldMap) return;
+      const shapes = roomElements.worldMap.querySelectorAll(".country-shape");
+      shapes.forEach((shape) => {
+        shape.classList.toggle("selected", name && shape.getAttribute("data-name") === name);
+      });
+    }
+
+    function updateCountryDetails(name, player) {
+      if (!roomElements.countryDetails) return;
+      if (!name) {
+        roomElements.countryDetails.innerHTML = "<p>Select a country on the map to view intelligence.</p>";
+        return;
+      }
+      const nation = getNationByName(name);
+      if (!nation) {
+        roomElements.countryDetails.innerHTML = `<h4>${name}</h4><p>No dossier available.</p>`;
+        return;
+      }
+      const isPlayerNation = player && player.country === nation.name;
+      roomElements.countryDetails.innerHTML = `
+        <h4>${nation.name}</h4>
+        <p>${nation.description}</p>
+        <dl>
+          <dt>Capital</dt><dd>${nation.capital}</dd>
+          <dt>Leader</dt><dd>${nation.leader}</dd>
+          <dt>Ideology</dt><dd>${nation.ideology}</dd>
+          <dt>GDP</dt><dd>${nation.gdp.toLocaleString()} cr</dd>
+          <dt>Military</dt><dd>${nation.military}</dd>
+          <dt>Population</dt><dd>${nation.population.toLocaleString()} M</dd>
+          <dt>Taxes</dt><dd>${nation.taxes.income}% / ${nation.taxes.corporate}% / ${nation.taxes.tariffs}%</dd>
+        </dl>
+        ${isPlayerNation ? '<p class="parliament-meta">You currently govern this nation.</p>' : ""}
+      `;
+    }
+
+    function getNationByName(name) {
+      return nations.find((nation) => nation.name === name);
+    }
+
+    function setupWorldMap() {
+      if (!roomElements.worldMap) return;
+      const shapes = roomElements.worldMap.querySelectorAll(".country-shape");
+      shapes.forEach((shape) => {
+        shape.addEventListener("click", () => {
+          const name = shape.getAttribute("data-name");
+          selectedCountry = name;
+          const player = getActivePlayer();
+          updateCountryDetails(name, player);
+          highlightCountry(name);
+        });
+      });
+      updateCountryDetails(null, null);
+    }
+
+    function getNationByLeaderName(leaderName) {
+      return nations.find((nation) => nation.leader.toLowerCase() === leaderName.toLowerCase());
+    }
+
+    function isNationAssigned(nationName) {
+      if (!currentRoom || !nationName) return false;
+      return currentRoom.players.some((player) => player.country === nationName);
+    }
+
+    function findAvailableNation(ideology) {
+      if (!currentRoom) return null;
+      const prioritized = nations.filter((nation) => nation.ideology === ideology && !isNationAssigned(nation.name));
+      if (prioritized.length) {
+        return prioritized[0];
+      }
+      return nations.find((nation) => !isNationAssigned(nation.name)) || null;
+    }
+
+    function autoPopulateLeaders() {
+      if (!currentRoom) {
+        alert("Create or join a room first.");
+        return;
+      }
+      const available = nations.filter((nation) => !isNationAssigned(nation.name));
+      if (!available.length) {
+        alert("All featured nations already have leaders in this room.");
+        return;
+      }
+      available.forEach((nation) => {
+        if (currentRoom.players.some((player) => player.name === nation.leader)) {
+          return;
+        }
+        const player = createBasePlayer(nation.leader, nation.ideology, nation);
+        currentRoom.players.push(player);
+        log(`${nation.leader} assumes stewardship of the ${nation.name}.`);
+      });
+      persistRooms();
+      renderRoom();
+      renderEventLog();
     }
 
     function renderWarTargets(player) {
@@ -845,7 +1494,9 @@
     function getActivePlayer() {
       if (!currentRoom || !currentRoom.players.length) return null;
       currentPlayerIndex = Math.max(0, Math.min(currentRoom.players.length - 1, currentPlayerIndex));
-      return currentRoom.players[currentPlayerIndex];
+      const player = currentRoom.players[currentPlayerIndex];
+      ensurePlayerUpToDate(player);
+      return player;
     }
 
     function clampPlayerStats(player) {
@@ -857,6 +1508,25 @@
       player.gdp = Math.max(0, player.gdp);
     }
 
+    function simulateParliamentShift(player) {
+      if (!player.parliament || player.parliament.length < 2) return;
+      const totalSeats = player.parliament.reduce((sum, party) => sum + party.seats, 0);
+      if (!totalSeats) return;
+      const fromIndex = Math.floor(Math.random() * player.parliament.length);
+      let toIndex = Math.floor(Math.random() * player.parliament.length);
+      while (toIndex === fromIndex) {
+        toIndex = Math.floor(Math.random() * player.parliament.length);
+      }
+      const fromParty = player.parliament[fromIndex];
+      const toParty = player.parliament[toIndex];
+      const swing = Math.max(1, Math.round(totalSeats * 0.01 + Math.random() * 3));
+      if (fromParty.seats <= swing) return;
+      fromParty.seats -= swing;
+      toParty.seats += swing;
+      player.parliament.sort((a, b) => b.seats - a.seats);
+      log(`${player.name}'s parliament shifts ${swing} seats from ${fromParty.name} to ${toParty.name}.`);
+    }
+
     function resolveTurn() {
       const player = getActivePlayer();
       if (!player) return;
@@ -865,12 +1535,18 @@
       const welfareCost = Math.round((player.gdp * player.budgets.welfare) / 500);
       const defenseCost = Math.round((player.military * player.budgets.defense) / 10);
       const diplomacyCost = Math.round((player.gdp * player.budgets.diplomacy) / 600);
+      const taxBreakdown = calculateTaxBreakdown(player);
+      const taxRevenue = taxBreakdown.total;
+      const netChange = taxRevenue + economyGain - welfareCost - defenseCost - diplomacyCost;
 
-      player.treasury += economyGain - welfareCost - defenseCost - diplomacyCost;
+      player.treasury += netChange;
       player.gdp += Math.round(player.research * 1.5);
       player.approval += Math.round((player.budgets.welfare - 25) / 2);
       player.stability += Math.round((player.budgets.defense - 25) / 3);
       player.research += Math.round(player.budgets.economy / 8);
+      player.approval += Math.round((30 - player.taxes.income) / 6);
+
+      simulateParliamentShift(player);
 
       handleWars(player);
       applyRandomEvent(player);
@@ -881,7 +1557,7 @@
       currentRoom.activePlayerIndex = currentPlayerIndex;
       persistRooms();
 
-      log(`${player.name} completed their turn. Treasury change: ${economyGain - welfareCost - defenseCost - diplomacyCost} credits.`);
+      log(`${player.name} completed their turn. Tax revenue ${taxRevenue} credits; treasury change ${netChange} credits.`);
       renderGameBoard();
     }
 
@@ -1019,11 +1695,15 @@
         alert("Leader already exists in this room.");
         return;
       }
-      currentRoom.players.push(createBasePlayer(name, ideology));
+      const preferredNation = getNationByLeaderName(name);
+      let nationToAssign = preferredNation && !isNationAssigned(preferredNation.name) ? preferredNation : findAvailableNation(ideology);
+      const player = createBasePlayer(name, ideology, nationToAssign);
+      currentRoom.players.push(player);
       roomElements.newPlayerName.value = "";
       persistRooms();
       renderRoom();
-      log(`${name} joins the leadership roster as a ${ideology}.`);
+      const nationMessage = nationToAssign ? ` and takes command of the ${nationToAssign.name}` : "";
+      log(`${name} joins the leadership roster as a ${ideology}${nationMessage}.`);
     }
 
     function startGame() {
@@ -1085,6 +1765,7 @@
 
     roomElements.resetRoom.addEventListener("click", resetRoom);
     roomElements.addPlayer.addEventListener("click", addPlayer);
+    roomElements.autoFill.addEventListener("click", autoPopulateLeaders);
     roomElements.startGame.addEventListener("click", startGame);
     roomElements.endTurn.addEventListener("click", resolveTurn);
     roomElements.autosave.addEventListener("click", forceSave);
@@ -1096,6 +1777,7 @@
       if (codes.length) {
         roomElements.roomCode.value = codes[0];
       }
+      setupWorldMap();
       updateVisibility();
     });
   </script>
