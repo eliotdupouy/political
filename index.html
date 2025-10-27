@@ -606,13 +606,71 @@
         <div class="board-card" id="world-map-card">
           <h3>World Map</h3>
           <div class="map-wrapper">
-            <svg id="world-map" viewBox="0 0 800 400" role="img" aria-labelledby="map-title">
+            <svg
+              id="world-map"
+              viewBox="0 0 960 480"
+              role="img"
+              aria-labelledby="map-title"
+            >
               <title id="map-title">Global theatre overview</title>
-              <path class="country-shape" data-name="Auroran Union" d="M140 110 L240 95 L310 140 L290 200 L200 210 L150 180 Z"></path>
-              <path class="country-shape" data-name="Maridian Collective" d="M330 170 L420 150 L470 190 L460 250 L360 260 L320 210 Z"></path>
-              <path class="country-shape" data-name="Solis Republic" d="M480 120 L600 110 L640 160 L600 210 L500 200 Z"></path>
-              <path class="country-shape" data-name="Nordhavn Pact" d="M220 40 L340 30 L360 80 L300 110 L230 90 Z"></path>
-              <path class="country-shape" data-name="Kestrel Dominion" d="M520 230 L640 240 L690 300 L620 330 L500 300 Z"></path>
+              <desc>
+                Simplified world map with highlighted playable nations. Click a country to open its dossier.
+              </desc>
+              <path
+                class="country-shape"
+                data-name="Canada"
+                d="M96 104 L156 76 L232 70 L310 86 L332 122 L284 138 L222 132 L186 160 L118 150 Z"
+              ></path>
+              <path
+                class="country-shape"
+                data-name="United States"
+                d="M128 170 L214 162 L288 168 L322 198 L320 230 L276 236 L248 220 L204 230 L154 210 L128 190 Z"
+              ></path>
+              <path
+                class="country-shape"
+                data-name="Mexico"
+                d="M122 206 L172 224 L212 244 L198 278 L150 286 L120 258 Z"
+              ></path>
+              <path
+                class="country-shape"
+                data-name="Brazil"
+                d="M260 248 L316 244 L356 262 L372 304 L338 342 L296 334 L270 300 Z"
+              ></path>
+              <path
+                class="country-shape"
+                data-name="United Kingdom"
+                d="M430 110 L448 96 L468 110 L464 138 L440 146 L422 132 Z"
+              ></path>
+              <path
+                class="country-shape"
+                data-name="France"
+                d="M436 154 L474 150 L492 172 L480 202 L440 202 L416 182 Z"
+              ></path>
+              <path
+                class="country-shape"
+                data-name="Germany"
+                d="M484 142 L524 140 L540 168 L522 194 L488 188 L468 164 Z"
+              ></path>
+              <path
+                class="country-shape"
+                data-name="Russia"
+                d="M400 64 L472 48 L562 42 L646 64 L700 84 L732 110 L688 132 L630 118 L556 124 L510 114 L452 118 Z"
+              ></path>
+              <path
+                class="country-shape"
+                data-name="China"
+                d="M596 172 L652 162 L710 178 L724 214 L696 242 L642 236 L600 222 L580 196 Z"
+              ></path>
+              <path
+                class="country-shape"
+                data-name="India"
+                d="M586 214 L612 224 L630 250 L608 278 L572 270 L560 238 Z"
+              ></path>
+              <path
+                class="country-shape"
+                data-name="Australia"
+                d="M700 322 L758 312 L808 328 L820 366 L780 392 L716 380 L684 348 Z"
+              ></path>
             </svg>
             <div id="country-details"></div>
           </div>
@@ -634,98 +692,212 @@
   <script>
     const nations = [
       {
-        id: "auroran",
-        name: "Auroran Union",
-        leader: "Chancellor Selene Vega",
-        ideology: "Social Democracy",
-        capital: "Helios Prime",
-        population: 92,
-        gdp: 3200,
-        military: 480,
-        strength: 260,
+        id: "canada",
+        name: "Canada",
+        leader: "Prime Minister Amelia Chen",
+        ideology: "Parliamentary Democracy",
+        capital: "Ottawa",
+        population: 38,
+        gdp: 1800,
+        military: 70,
+        strength: 180,
         color: "#38bdf8",
-        description: "A high-tech federation focused on social welfare and orbital trade routes.",
-        taxes: { income: 28, corporate: 24, tariffs: 10 },
+        description: "A resource-rich democracy balancing vast territories with modern innovation hubs.",
+        taxes: { income: 25, corporate: 26, tariffs: 5 },
         parliament: [
-          { name: "Progress Alliance", seats: 210, color: "#38bdf8" },
-          { name: "Civic Union", seats: 90, color: "#94a3b8" },
-          { name: "Renewal Greens", seats: 50, color: "#4ade80" }
+          { name: "Liberal Alliance", seats: 158, color: "#38bdf8" },
+          { name: "Conservative Bloc", seats: 120, color: "#60a5fa" },
+          { name: "Green Coalition", seats: 40, color: "#4ade80" }
         ]
       },
       {
-        id: "maridian",
-        name: "Maridian Collective",
-        leader: "Coordinator Imre Kade",
-        ideology: "Technocrat",
-        capital: "Axis City",
-        population: 74,
-        gdp: 2800,
-        military: 420,
-        strength: 220,
-        color: "#a855f7",
-        description: "A data-driven council state that leverages megacities and automation.",
-        taxes: { income: 24, corporate: 26, tariffs: 12 },
+        id: "united-states",
+        name: "United States",
+        leader: "President Jordan Reyes",
+        ideology: "Federal Republic",
+        capital: "Washington D.C.",
+        population: 331,
+        gdp: 21400,
+        military: 800,
+        strength: 320,
+        color: "#2563eb",
+        description: "An economic superpower wielding unmatched soft power and global military reach.",
+        taxes: { income: 24, corporate: 21, tariffs: 4 },
         parliament: [
-          { name: "Systems Forum", seats: 180, color: "#a855f7" },
-          { name: "Urban Bloc", seats: 110, color: "#38bdf8" },
-          { name: "Liberty Front", seats: 60, color: "#f97316" }
+          { name: "Unity Party", seats: 218, color: "#2563eb" },
+          { name: "Liberty Caucus", seats: 210, color: "#f97316" },
+          { name: "Progress Forum", seats: 7, color: "#a855f7" }
         ]
       },
       {
-        id: "solis",
-        name: "Solis Republic",
-        leader: "President Darius Holt",
-        ideology: "Liberal",
-        capital: "Radiant Bay",
-        population: 105,
-        gdp: 3600,
-        military: 510,
-        strength: 300,
-        color: "#fbbf24",
-        description: "A coastal republic championing free markets and maritime supremacy.",
-        taxes: { income: 22, corporate: 18, tariffs: 6 },
+        id: "mexico",
+        name: "Mexico",
+        leader: "President Sofía Marquez",
+        ideology: "Federal Republic",
+        capital: "Mexico City",
+        population: 128,
+        gdp: 1200,
+        military: 100,
+        strength: 200,
+        color: "#f59e0b",
+        description: "A growing manufacturing hub bridging North and Latin American trade routes.",
+        taxes: { income: 27, corporate: 25, tariffs: 9 },
         parliament: [
-          { name: "Liberty Coalition", seats: 160, color: "#fbbf24" },
-          { name: "Civic Moderates", seats: 120, color: "#38bdf8" },
-          { name: "People's Assembly", seats: 70, color: "#ef4444" }
+          { name: "National Renewal", seats: 250, color: "#f97316" },
+          { name: "Civic Movement", seats: 120, color: "#38bdf8" },
+          { name: "Social Alliance", seats: 80, color: "#ef4444" }
         ]
       },
       {
-        id: "nordhavn",
-        name: "Nordhavn Pact",
-        leader: "Marshal Anika Rykov",
-        ideology: "Conservative",
-        capital: "Frostholm",
-        population: 68,
-        gdp: 2500,
-        military: 460,
-        strength: 280,
-        color: "#60a5fa",
-        description: "An arctic alliance prioritising defense industries and resource security.",
-        taxes: { income: 26, corporate: 22, tariffs: 14 },
+        id: "brazil",
+        name: "Brazil",
+        leader: "President Laura Campos",
+        ideology: "Presidential Republic",
+        capital: "Brasília",
+        population: 213,
+        gdp: 1440,
+        military: 210,
+        strength: 230,
+        color: "#22c55e",
+        description: "South America's largest democracy balancing agribusiness, industry, and rainforest stewardship.",
+        taxes: { income: 28, corporate: 23, tariffs: 12 },
         parliament: [
-          { name: "Order League", seats: 190, color: "#60a5fa" },
-          { name: "Frontier Party", seats: 100, color: "#f97316" },
-          { name: "Labor Syndicate", seats: 60, color: "#ef4444" }
+          { name: "Workers Front", seats: 220, color: "#22c55e" },
+          { name: "Liberal Progress", seats: 150, color: "#60a5fa" },
+          { name: "Social Conservatives", seats: 70, color: "#f97316" }
         ]
       },
       {
-        id: "kestrel",
-        name: "Kestrel Dominion",
-        leader: "Regent Maia Corvo",
-        ideology: "Authoritarian",
-        capital: "Ironspire",
-        population: 88,
-        gdp: 3000,
-        military: 540,
+        id: "united-kingdom",
+        name: "United Kingdom",
+        leader: "Prime Minister Henry Clarke",
+        ideology: "Constitutional Monarchy",
+        capital: "London",
+        population: 67,
+        gdp: 2820,
+        military: 220,
+        strength: 250,
+        color: "#0ea5e9",
+        description: "A maritime power leveraging finance, culture, and alliances to project influence abroad.",
+        taxes: { income: 26, corporate: 25, tariffs: 5 },
+        parliament: [
+          { name: "Commons Unity", seats: 320, color: "#0ea5e9" },
+          { name: "Traditionalists", seats: 210, color: "#f97316" },
+          { name: "Reform Greens", seats: 40, color: "#4ade80" }
+        ]
+      },
+      {
+        id: "france",
+        name: "France",
+        leader: "President Camille Dubois",
+        ideology: "Semi-Presidential Republic",
+        capital: "Paris",
+        population: 65,
+        gdp: 2700,
+        military: 205,
         strength: 240,
-        color: "#f97316",
-        description: "An expansionist regime controlling key desert trade corridors.",
-        taxes: { income: 30, corporate: 28, tariffs: 18 },
+        color: "#ef4444",
+        description: "A central European power balancing social welfare with global commitments and cultural diplomacy.",
+        taxes: { income: 29, corporate: 28, tariffs: 7 },
         parliament: [
-          { name: "Dominion Council", seats: 150, color: "#f97316" },
-          { name: "Security Directorate", seats: 130, color: "#ef4444" },
-          { name: "Meridian Forum", seats: 70, color: "#38bdf8" }
+          { name: "Republic Forward", seats: 250, color: "#ef4444" },
+          { name: "Republican Right", seats: 150, color: "#f97316" },
+          { name: "Green Left", seats: 80, color: "#22c55e" }
+        ]
+      },
+      {
+        id: "germany",
+        name: "Germany",
+        leader: "Chancellor Lukas Feld",
+        ideology: "Federal Parliamentary Republic",
+        capital: "Berlin",
+        population: 83,
+        gdp: 3800,
+        military: 190,
+        strength: 260,
+        color: "#facc15",
+        description: "Europe's industrial engine driving innovation, export surpluses, and continental leadership.",
+        taxes: { income: 27, corporate: 29, tariffs: 6 },
+        parliament: [
+          { name: "Union Alliance", seats: 245, color: "#facc15" },
+          { name: "Social Forum", seats: 206, color: "#38bdf8" },
+          { name: "Freedom Greens", seats: 120, color: "#22c55e" }
+        ]
+      },
+      {
+        id: "russia",
+        name: "Russia",
+        leader: "President Tatiana Volkov",
+        ideology: "Semi-Presidential Federation",
+        capital: "Moscow",
+        population: 146,
+        gdp: 1700,
+        military: 610,
+        strength: 300,
+        color: "#f87171",
+        description: "A vast federation leveraging energy exports and military weight to influence its near abroad.",
+        taxes: { income: 20, corporate: 20, tariffs: 15 },
+        parliament: [
+          { name: "Unity Party", seats: 340, color: "#f87171" },
+          { name: "Patriot Front", seats: 120, color: "#f97316" },
+          { name: "Civic Opposition", seats: 90, color: "#38bdf8" }
+        ]
+      },
+      {
+        id: "china",
+        name: "China",
+        leader: "Chair Li Wen",
+        ideology: "Single-Party State",
+        capital: "Beijing",
+        population: 1440,
+        gdp: 14700,
+        military: 750,
+        strength: 340,
+        color: "#f43f5e",
+        description: "An economic juggernaut balancing rapid urbanisation with global Belt and Road ambitions.",
+        taxes: { income: 22, corporate: 25, tariffs: 10 },
+        parliament: [
+          { name: "Central Committee", seats: 680, color: "#f43f5e" },
+          { name: "Technocratic Forum", seats: 220, color: "#a855f7" },
+          { name: "Regional Council", seats: 120, color: "#22c55e" }
+        ]
+      },
+      {
+        id: "india",
+        name: "India",
+        leader: "Prime Minister Kavya Patel",
+        ideology: "Parliamentary Republic",
+        capital: "New Delhi",
+        population: 1380,
+        gdp: 2870,
+        military: 620,
+        strength: 310,
+        color: "#f59e0b",
+        description: "A burgeoning democracy managing vast diversity while driving technology and services growth.",
+        taxes: { income: 23, corporate: 22, tariffs: 11 },
+        parliament: [
+          { name: "National Congress", seats: 290, color: "#f59e0b" },
+          { name: "Federal Alliance", seats: 180, color: "#2563eb" },
+          { name: "People's Front", seats: 70, color: "#22c55e" }
+        ]
+      },
+      {
+        id: "australia",
+        name: "Australia",
+        leader: "Prime Minister Sienna Ward",
+        ideology: "Parliamentary Democracy",
+        capital: "Canberra",
+        population: 25,
+        gdp: 1390,
+        military: 80,
+        strength: 200,
+        color: "#0ea5e9",
+        description: "An Indo-Pacific middle power safeguarding sea lanes and mineral exports across the region.",
+        taxes: { income: 27, corporate: 30, tariffs: 6 },
+        parliament: [
+          { name: "Labor Coalition", seats: 76, color: "#ef4444" },
+          { name: "Liberal Alliance", seats: 65, color: "#0ea5e9" },
+          { name: "Greens", seats: 15, color: "#22c55e" }
         ]
       }
     ];
