@@ -1,1 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Strategic Statecraft</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0f172a;
+      --fg: #e2e8f0;
+      --primary: #38bdf8;
+      --accent: #f97316;
+      --danger: #f87171;
+      --success: #4ade80;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
 
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 70%), var(--bg);
+      color: var(--fg);
+      min-height: 100vh;
+    }
+
+    header {
+      background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid rgba(226, 232, 240, 0.1);
+      padding: 1.5rem;
+      text-align: center;
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      backdrop-filter: blur(8px);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    header p {
+      margin-top: 0.35rem;
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+
+    main {
+      display: grid;
+      gap: 1.5rem;
+      padding: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    section {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      border-radius: 16px;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 12px 24px rgba(8, 47, 73, 0.35);
+    }
+
+    h2 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    h2 span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(56, 189, 248, 0.18);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 0.15rem 0.55rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+    }
+
+    .grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .grid.two {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      margin-bottom: 0.4rem;
+      opacity: 0.7;
+      letter-spacing: 0.08em;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 0.65rem 0.75rem;
+      border-radius: 10px;
+      border: 1px solid rgba(226, 232, 240, 0.15);
+      background: rgba(15, 23, 42, 0.9);
+      color: inherit;
+      transition: border-color 0.2s ease;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    button {
+      appearance: none;
+      border: none;
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.8), rgba(14, 165, 233, 0.8));
+      color: #0f172a;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      letter-spacing: 0.03em;
+    }
+
+    button:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 18px rgba(14, 165, 233, 0.35);
+    }
+
+    button:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
+
+    button.secondary {
+      background: rgba(148, 163, 184, 0.28);
+      color: var(--fg);
+    }
+
+    button.danger {
+      background: linear-gradient(135deg, rgba(248, 113, 113, 0.82), rgba(248, 113, 113, 0.65));
+      color: #0f172a;
+    }
+
+    button.success {
+      background: linear-gradient(135deg, rgba(74, 222, 128, 0.82), rgba(22, 163, 74, 0.75));
+      color: #052e16;
+    }
+
+    ul.metric-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0.75rem;
+    }
+
+    ul.metric-list li {
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(226, 232, 240, 0.08);
+      border-radius: 12px;
+      padding: 0.75rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(148, 163, 184, 0.2);
+    }
+
+    #player-list {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .player-card {
+      border: 1px solid rgba(56, 189, 248, 0.14);
+      border-radius: 12px;
+      padding: 0.75rem;
+      background: rgba(10, 20, 40, 0.9);
+      cursor: pointer;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .player-card.active {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+
+    .player-card h3 {
+      margin: 0;
+      font-size: 1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .player-card dl {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.35rem 0.5rem;
+      margin: 0.5rem 0 0;
+      font-size: 0.75rem;
+    }
+
+    .player-card dt {
+      opacity: 0.6;
+    }
+
+    .log {
+      max-height: 240px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    .log-entry {
+      border-left: 3px solid rgba(56, 189, 248, 0.4);
+      padding-left: 0.65rem;
+      font-size: 0.85rem;
+      line-height: 1.35;
+    }
+
+    .log-entry strong {
+      color: var(--primary);
+    }
+
+    .inline-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .inline-actions button {
+      flex: 1 1 180px;
+    }
+
+    .war-panel {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .war-targets {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .war-badge {
+      background: rgba(248, 113, 113, 0.25);
+      border: 1px solid rgba(248, 113, 113, 0.4);
+      padding: 0.3rem 0.55rem;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .budgets {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .budget-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .budget-controls {
+      display: inline-flex;
+      gap: 0.4rem;
+    }
+
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 1.7rem;
+      }
+
+      section {
+        padding: 1rem;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Strategic Statecraft</h1>
+    <p>Turn-based political and military strategy for web browsers. Manage your nation, negotiate with allies, and wage wars in shared rooms with friends.</p>
+  </header>
+
+  <main>
+    <section id="room-setup">
+      <h2><span>01</span> Room &amp; Leadership</h2>
+      <div class="grid two">
+        <div>
+          <label for="room-code">Room Code</label>
+          <input id="room-code" placeholder="e.g. AURORA-42" />
+        </div>
+        <div>
+          <label for="leader-name">Your Leader Name</label>
+          <input id="leader-name" placeholder="Prime Minister Vega" />
+        </div>
+      </div>
+      <div class="inline-actions" style="margin-top: 0.75rem;">
+        <button id="create-room">Create Room</button>
+        <button id="join-room" class="secondary">Join Room</button>
+        <button id="reset-room" class="danger">Reset Room</button>
+      </div>
+      <p style="margin-top: 0.8rem; font-size: 0.75rem; opacity: 0.7;">Rooms and saves are stored locally on this device. Share your room code and take turns with friends to guide your nations.</p>
+    </section>
+
+    <section id="player-management" class="hidden">
+      <h2><span>02</span> Cabinet &amp; Allies</h2>
+      <div class="grid two">
+        <div>
+          <label for="new-player-name">Add Leader</label>
+          <input id="new-player-name" placeholder="General Nyla" />
+        </div>
+        <div>
+          <label for="new-player-ideology">Ideology</label>
+          <select id="new-player-ideology">
+            <option value="Social Democracy">Social Democracy</option>
+            <option value="Liberal">Liberal</option>
+            <option value="Conservative">Conservative</option>
+            <option value="Nationalist">Nationalist</option>
+            <option value="Technocrat">Technocrat</option>
+            <option value="Ecologist">Ecologist</option>
+            <option value="Authoritarian">Authoritarian</option>
+          </select>
+        </div>
+      </div>
+      <div class="inline-actions" style="margin-top: 0.75rem;">
+        <button id="add-player" class="success">Add Leader</button>
+        <button id="start-game">Launch Simulation</button>
+      </div>
+      <div id="player-list" style="margin-top: 1rem;"></div>
+    </section>
+
+    <section id="game-board" class="hidden">
+      <h2><span>03</span> National Dashboard</h2>
+      <p style="margin-top: 0; font-size: 0.85rem; opacity: 0.75;">Turn <strong id="turn-display">1</strong> — Active Leader: <strong id="active-leader">-</strong></p>
+      <div class="grid two">
+        <div>
+          <h3 style="margin-top: 0; text-transform: uppercase; letter-spacing: 0.05em;">Key Metrics</h3>
+          <ul class="metric-list" id="metrics"></ul>
+          <div class="budgets" style="margin-top: 1rem;">
+            <h3 style="margin: 0; text-transform: uppercase; letter-spacing: 0.05em;">Budget Allocations</h3>
+            <div id="budget-list"></div>
+          </div>
+        </div>
+        <div>
+          <h3 style="margin-top: 0; text-transform: uppercase; letter-spacing: 0.05em;">Actions</h3>
+          <div class="grid">
+            <div>
+              <h4 style="margin: 0 0 0.5rem;">Domestic Policies</h4>
+              <div class="inline-actions" id="policy-actions"></div>
+            </div>
+            <div>
+              <h4 style="margin: 0 0 0.5rem;">Diplomacy &amp; War</h4>
+              <div class="war-panel">
+                <div class="war-targets" id="war-targets"></div>
+                <div class="inline-actions">
+                  <button id="deploy-troops" class="secondary">Deploy Troops</button>
+                  <button id="negotiate-peace" class="success">Negotiate Peace</button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4 style="margin: 0 0 0.5rem;">Executive</h4>
+              <div class="inline-actions">
+                <button id="end-turn" class="success">Resolve Turn</button>
+                <button id="autosave">Force Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="war-status" class="hidden">
+      <h2><span>04</span> Military Theatre</h2>
+      <div id="active-wars"></div>
+    </section>
+
+    <section id="event-feed" class="hidden">
+      <h2><span>05</span> Situation Room</h2>
+      <div class="log" id="event-log"></div>
+    </section>
+  </main>
+
+  <script>
+    const policyActions = [
+      {
+        id: "raiseTaxes",
+        label: "Raise Taxes",
+        description: "Boost treasury but lower approval",
+        execute: (player) => {
+          const revenue = Math.round(player.gdp * 0.08);
+          player.treasury += revenue;
+          player.approval -= 4;
+          player.stability -= 2;
+          return `Tax revenues increase by ${revenue} credits, but the public reacts poorly.`;
+        }
+      },
+      {
+        id: "cutTaxes",
+        label: "Cut Taxes",
+        description: "Raise approval, cut income",
+        execute: (player) => {
+          const cost = Math.round(player.gdp * 0.06);
+          player.treasury = Math.max(0, player.treasury - cost);
+          player.approval += 5;
+          player.stability += 2;
+          return `Tax cuts reduce treasury by ${cost} credits, improving approval ratings.`;
+        }
+      },
+      {
+        id: "expandWelfare",
+        label: "Expand Welfare",
+        description: "Improve approval, cost treasury",
+        execute: (player) => {
+          const cost = 80;
+          if (player.treasury < cost) {
+            return `Insufficient treasury to expand welfare.`;
+          }
+          player.treasury -= cost;
+          player.approval += 6;
+          player.stability += 3;
+          return `Social programs uplift marginalized citizens. Approval surges.`;
+        }
+      },
+      {
+        id: "investResearch",
+        label: "Invest in R&amp;D",
+        description: "Boosts technology and GDP",
+        execute: (player) => {
+          const cost = 120;
+          if (player.treasury < cost) {
+            return `Research bureaus demand ${cost} credits to proceed.`;
+          }
+          player.treasury -= cost;
+          player.research += 8;
+          player.gdp += 60;
+          return `Innovation labs deliver breakthroughs, expanding GDP and research.`;
+        }
+      },
+      {
+        id: "infrastructurePush",
+        label: "Infrastructure Push",
+        description: "Boosts GDP, costs treasury",
+        execute: (player) => {
+          const cost = 150;
+          if (player.treasury < cost) {
+            return `Construction requires ${cost} credits, treasury is lacking.`;
+          }
+          player.treasury -= cost;
+          player.gdp += 110;
+          player.approval += 2;
+          return `New highways and ports stimulate economic growth and mild approval gains.`;
+        }
+      },
+      {
+        id: "tightenSecurity",
+        label: "Tighten Security",
+        description: "Boost stability, lower approval",
+        execute: (player) => {
+          const cost = 70;
+          if (player.treasury < cost) {
+            return `Security services require ${cost} credits you do not have.`;
+          }
+          player.treasury -= cost;
+          player.stability += 7;
+          player.approval -= 3;
+          return `Security forces clamp down on unrest. Stability improves at the cost of goodwill.`;
+        }
+      }
+    ];
+
+    const worldPowers = [
+      { name: "Auroran Union", strength: 260 },
+      { name: "Maridian Collective", strength: 220 },
+      { name: "Solis Republic", strength: 300 },
+      { name: "Nordhavn Pact", strength: 280 },
+      { name: "Kestrel Dominion", strength: 240 }
+    ];
+
+    const roomElements = {
+      roomCode: document.getElementById("room-code"),
+      leaderName: document.getElementById("leader-name"),
+      createRoom: document.getElementById("create-room"),
+      joinRoom: document.getElementById("join-room"),
+      resetRoom: document.getElementById("reset-room"),
+      playerManagement: document.getElementById("player-management"),
+      addPlayer: document.getElementById("add-player"),
+      playerList: document.getElementById("player-list"),
+      startGame: document.getElementById("start-game"),
+      newPlayerName: document.getElementById("new-player-name"),
+      newPlayerIdeology: document.getElementById("new-player-ideology"),
+      gameBoard: document.getElementById("game-board"),
+      turnDisplay: document.getElementById("turn-display"),
+      activeLeader: document.getElementById("active-leader"),
+      metrics: document.getElementById("metrics"),
+      budgetList: document.getElementById("budget-list"),
+      policyActions: document.getElementById("policy-actions"),
+      warTargets: document.getElementById("war-targets"),
+      deployTroops: document.getElementById("deploy-troops"),
+      negotiatePeace: document.getElementById("negotiate-peace"),
+      endTurn: document.getElementById("end-turn"),
+      autosave: document.getElementById("autosave"),
+      warStatus: document.getElementById("war-status"),
+      activeWars: document.getElementById("active-wars"),
+      eventFeed: document.getElementById("event-feed"),
+      eventLog: document.getElementById("event-log")
+    };
+
+    let rooms = loadRooms();
+    let currentRoom = null;
+    let currentPlayerIndex = 0;
+
+    function loadRooms() {
+      try {
+        return JSON.parse(localStorage.getItem("strategicRooms")) || {};
+      } catch (error) {
+        console.warn("Unable to read saves", error);
+        return {};
+      }
+    }
+
+    function persistRooms() {
+      localStorage.setItem("strategicRooms", JSON.stringify(rooms));
+    }
+
+    function generateId() {
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
+      }
+      return `leader-${Math.random().toString(36).slice(2, 11)}`;
+    }
+
+    function createBasePlayer(name, ideology) {
+      return {
+        id: generateId(),
+        name,
+        ideology,
+        treasury: 650,
+        gdp: 2200,
+        approval: 55,
+        stability: 60,
+        military: 420,
+        research: 30,
+        warWeariness: 0,
+        wars: [],
+        budgets: {
+          welfare: 25,
+          defense: 25,
+          economy: 30,
+          diplomacy: 20
+        }
+      };
+    }
+
+    function hydrateRoom(code) {
+      const room = rooms[code];
+      if (!room) return null;
+      currentRoom = room;
+      currentPlayerIndex = room.activePlayerIndex || 0;
+      updateVisibility();
+      renderRoom();
+      log(`Joined room ${code}.`);
+      return room;
+    }
+
+    function updateVisibility() {
+      const hasRoom = Boolean(currentRoom);
+      roomElements.playerManagement.classList.toggle("hidden", !hasRoom);
+      roomElements.gameBoard.classList.toggle("hidden", !hasRoom || !currentRoom.started);
+      roomElements.warStatus.classList.toggle("hidden", !hasRoom || !currentRoom.started);
+      roomElements.eventFeed.classList.toggle("hidden", !hasRoom || !currentRoom.started);
+    }
+
+    function ensureRoom(code, leaderName, creating = false) {
+      if (!code || !leaderName) {
+        alert("Provide both a room code and leader name.");
+        return;
+      }
+      if (creating) {
+        if (rooms[code]) {
+          alert("Room code already exists. Choose another.");
+          return;
+        }
+        const player = createBasePlayer(leaderName, "Social Democracy");
+        rooms[code] = {
+          code,
+          players: [player],
+          createdAt: Date.now(),
+          log: [`Room ${code} founded by ${leaderName}.`],
+          turn: 1,
+          started: false,
+          activePlayerIndex: 0
+        };
+        persistRooms();
+        hydrateRoom(code);
+        renderRoom();
+        log(`${leaderName} established the room.`);
+      } else {
+        if (!rooms[code]) {
+          alert("Room not found. Create it first.");
+          return;
+        }
+        hydrateRoom(code);
+        const exists = currentRoom.players.some((p) => p.name.toLowerCase() === leaderName.toLowerCase());
+        if (!exists) {
+          const newPlayer = createBasePlayer(leaderName, "Liberal");
+          currentRoom.players.push(newPlayer);
+          persistRooms();
+          renderRoom();
+          log(`${leaderName} joined the room as a new leader.`);
+        }
+      }
+    }
+
+    function renderRoom() {
+      if (!currentRoom) return;
+      roomElements.playerList.innerHTML = "";
+      currentRoom.players.forEach((player, index) => {
+        const card = document.createElement("div");
+        card.className = "player-card" + (index === currentPlayerIndex ? " active" : "");
+        card.innerHTML = `
+          <h3>${player.name} <span class="tag">${player.ideology}</span></h3>
+          <dl>
+            <dt>Treasury</dt><dd>${player.treasury}</dd>
+            <dt>GDP</dt><dd>${player.gdp}</dd>
+            <dt>Approval</dt><dd>${player.approval}%</dd>
+            <dt>Stability</dt><dd>${player.stability}%</dd>
+          </dl>
+        `;
+        card.addEventListener("click", () => {
+          currentPlayerIndex = index;
+          currentRoom.activePlayerIndex = index;
+          persistRooms();
+          renderRoom();
+          renderGameBoard();
+        });
+        roomElements.playerList.appendChild(card);
+      });
+
+      updateVisibility();
+      if (currentRoom.started) {
+        renderGameBoard();
+        renderWarStatus();
+        renderEventLog();
+      }
+    }
+
+    function renderGameBoard() {
+      if (!currentRoom || !currentRoom.started) return;
+      const player = getActivePlayer();
+      roomElements.turnDisplay.textContent = currentRoom.turn;
+      roomElements.activeLeader.textContent = player.name;
+      roomElements.metrics.innerHTML = "";
+
+      const metrics = [
+        { label: "Treasury", value: `${player.treasury.toLocaleString()} cr` },
+        { label: "GDP", value: `${player.gdp.toLocaleString()} cr` },
+        { label: "Approval", value: `${Math.max(0, Math.min(100, player.approval))}%` },
+        { label: "Stability", value: `${Math.max(0, Math.min(100, player.stability))}%` },
+        { label: "Military Strength", value: player.military },
+        { label: "Research", value: player.research },
+        { label: "War Weariness", value: player.warWeariness }
+      ];
+
+      metrics.forEach((metric) => {
+        const li = document.createElement("li");
+        li.innerHTML = `<span>${metric.label}</span><strong>${metric.value}</strong>`;
+        roomElements.metrics.appendChild(li);
+      });
+
+      renderBudgets(player);
+      renderPolicies();
+      renderWarTargets(player);
+      renderWarStatus();
+      renderEventLog();
+    }
+
+    function renderBudgets(player) {
+      roomElements.budgetList.innerHTML = "";
+      Object.entries(player.budgets).forEach(([key, value]) => {
+        const row = document.createElement("div");
+        row.className = "budget-row";
+        row.innerHTML = `
+          <span style="text-transform: capitalize;">${key}</span>
+          <div class="budget-controls">
+            <button data-budget="${key}" data-delta="-5" class="secondary">-</button>
+            <span>${value}%</span>
+            <button data-budget="${key}" data-delta="5" class="secondary">+</button>
+          </div>
+        `;
+        roomElements.budgetList.appendChild(row);
+      });
+      roomElements.budgetList.querySelectorAll("button").forEach((button) => {
+        button.addEventListener("click", () => {
+          const key = button.getAttribute("data-budget");
+          const delta = Number(button.getAttribute("data-delta"));
+          adjustBudget(key, delta);
+        });
+      });
+    }
+
+    function renderPolicies() {
+      roomElements.policyActions.innerHTML = "";
+      policyActions.forEach((action) => {
+        const button = document.createElement("button");
+        button.textContent = action.label;
+        button.title = action.description;
+        button.addEventListener("click", () => handlePolicy(action));
+        roomElements.policyActions.appendChild(button);
+      });
+    }
+
+    function renderWarTargets(player) {
+      roomElements.warTargets.innerHTML = "";
+      worldPowers.forEach((power) => {
+        const activeWar = player.wars.find((war) => war.target === power.name);
+        const button = document.createElement("button");
+        button.textContent = activeWar ? `Engaged: ${power.name}` : `Confront ${power.name}`;
+        button.className = activeWar ? "danger" : "secondary";
+        button.addEventListener("click", () => {
+          if (activeWar) {
+            log(`${player.name} is already at war with ${power.name}.`);
+            renderEventLog();
+          } else {
+            declareWar(power);
+          }
+        });
+        roomElements.warTargets.appendChild(button);
+      });
+    }
+
+    function renderWarStatus() {
+      if (!currentRoom || !currentRoom.started) return;
+      const container = roomElements.activeWars;
+      container.innerHTML = "";
+      currentRoom.players.forEach((player) => {
+        if (!player.wars.length) return;
+        const block = document.createElement("div");
+        block.className = "player-card";
+        const warLines = player.wars
+          .map((war) => `<div class="war-badge">${war.target} • Front ${war.front}% • Enemy ${war.strength}</div>`)
+          .join("");
+        block.innerHTML = `<h3>${player.name}</h3>${warLines}`;
+        container.appendChild(block);
+      });
+      roomElements.warStatus.classList.toggle("hidden", container.children.length === 0);
+    }
+
+    function renderEventLog() {
+      if (!currentRoom) return;
+      roomElements.eventLog.innerHTML = "";
+      const logEntries = currentRoom.log.slice(-30);
+      logEntries.reverse().forEach((entry) => {
+        const div = document.createElement("div");
+        div.className = "log-entry";
+        div.innerHTML = entry;
+        roomElements.eventLog.appendChild(div);
+      });
+      roomElements.eventFeed.classList.toggle("hidden", logEntries.length === 0);
+    }
+
+    function adjustBudget(key, delta) {
+      const player = getActivePlayer();
+      const total = Object.values(player.budgets).reduce((sum, value) => sum + value, 0);
+      const currentValue = player.budgets[key];
+      const newValue = Math.min(60, Math.max(5, currentValue + delta));
+      const newTotal = total - currentValue + newValue;
+      if (newTotal > 120 || newTotal < 80) {
+        log(`Budget adjustment denied. Maintain a balanced plan between 80% and 120% total allocation.`);
+        renderEventLog();
+        return;
+      }
+      if (newValue === currentValue) {
+        log(`${key} budget already at its limit.`);
+        renderEventLog();
+        return;
+      }
+      player.budgets[key] = newValue;
+      log(`${player.name} adjusted ${key} budget to ${player.budgets[key]}%.`);
+      persistRooms();
+      renderGameBoard();
+    }
+
+    function handlePolicy(action) {
+      const player = getActivePlayer();
+      const result = action.execute(player);
+      log(`<strong>${player.name}</strong>: ${result}`);
+      clampPlayerStats(player);
+      persistRooms();
+      renderGameBoard();
+    }
+
+    function declareWar(power) {
+      const player = getActivePlayer();
+      const cost = Math.max(80, Math.round(power.strength * 0.2));
+      if (player.treasury < cost) {
+        log(`${player.name} lacks the ${cost} credits required to mobilize against ${power.name}.`);
+      } else {
+        player.treasury -= cost;
+        player.military += 30;
+        player.wars.push({ target: power.name, strength: power.strength, front: 50 });
+        player.approval -= 5;
+        player.warWeariness += 8;
+        log(`${player.name} declares war on ${power.name}. Mobilization consumes ${cost} credits.`);
+      }
+      clampPlayerStats(player);
+      persistRooms();
+      renderGameBoard();
+    }
+
+    function getActivePlayer() {
+      if (!currentRoom || !currentRoom.players.length) return null;
+      currentPlayerIndex = Math.max(0, Math.min(currentRoom.players.length - 1, currentPlayerIndex));
+      return currentRoom.players[currentPlayerIndex];
+    }
+
+    function clampPlayerStats(player) {
+      player.approval = Math.max(0, Math.min(100, player.approval));
+      player.stability = Math.max(0, Math.min(100, player.stability));
+      player.warWeariness = Math.max(0, Math.min(120, player.warWeariness));
+      player.military = Math.max(0, player.military);
+      player.treasury = Math.max(0, player.treasury);
+      player.gdp = Math.max(0, player.gdp);
+    }
+
+    function resolveTurn() {
+      const player = getActivePlayer();
+      if (!player) return;
+
+      const economyGain = Math.round((player.gdp * player.budgets.economy) / 320);
+      const welfareCost = Math.round((player.gdp * player.budgets.welfare) / 500);
+      const defenseCost = Math.round((player.military * player.budgets.defense) / 10);
+      const diplomacyCost = Math.round((player.gdp * player.budgets.diplomacy) / 600);
+
+      player.treasury += economyGain - welfareCost - defenseCost - diplomacyCost;
+      player.gdp += Math.round(player.research * 1.5);
+      player.approval += Math.round((player.budgets.welfare - 25) / 2);
+      player.stability += Math.round((player.budgets.defense - 25) / 3);
+      player.research += Math.round(player.budgets.economy / 8);
+
+      handleWars(player);
+      applyRandomEvent(player);
+      clampPlayerStats(player);
+
+      currentRoom.turn += 1;
+      currentPlayerIndex = (currentPlayerIndex + 1) % currentRoom.players.length;
+      currentRoom.activePlayerIndex = currentPlayerIndex;
+      persistRooms();
+
+      log(`${player.name} completed their turn. Treasury change: ${economyGain - welfareCost - defenseCost - diplomacyCost} credits.`);
+      renderGameBoard();
+    }
+
+    function handleWars(player) {
+      if (!player.wars.length) return;
+      const updatedWars = [];
+      player.wars.forEach((war) => {
+        const playerPower = player.military + player.research * 2 - player.warWeariness;
+        const enemyPower = war.strength + Math.random() * 80;
+        const delta = Math.round((playerPower - enemyPower) / 25);
+        war.front = Math.max(0, Math.min(100, war.front + delta));
+        player.military = Math.max(0, player.military - Math.max(5, Math.round(enemyPower / 40)));
+        player.warWeariness += 4;
+        if (war.front <= 0) {
+          log(`${player.name} loses ground to ${war.target}. Front collapses!`);
+          player.approval -= 10;
+          player.stability -= 12;
+        } else if (war.front >= 100) {
+          log(`${player.name} secures victory against ${war.target}.`);
+          player.approval += 9;
+          player.stability += 7;
+          player.treasury += Math.round(war.strength * 1.2);
+        } else {
+          updatedWars.push(war);
+        }
+      });
+      player.wars = updatedWars;
+    }
+
+    function negotiatePeace() {
+      const player = getActivePlayer();
+      if (!player.wars.length) {
+        log(`${player.name} has no wars to negotiate.`);
+        renderEventLog();
+        return;
+      }
+      const war = player.wars[Math.floor(Math.random() * player.wars.length)];
+      const cost = Math.round(war.strength * 0.4);
+      if (player.treasury < cost) {
+        log(`Diplomats request ${cost} credits to negotiate with ${war.target}. Treasury shortfall.`);
+        renderEventLog();
+        return;
+      }
+      player.treasury -= cost;
+      player.wars = player.wars.filter((w) => w !== war);
+      player.warWeariness = Math.max(0, player.warWeariness - 10);
+      player.approval += 4;
+      log(`${player.name} signs a ceasefire with ${war.target} at the cost of ${cost} credits.`);
+      clampPlayerStats(player);
+      persistRooms();
+      renderGameBoard();
+    }
+
+    function deployTroops() {
+      const player = getActivePlayer();
+      if (!player.wars.length) {
+        log(`${player.name} has no active wars. Troops conduct training exercises.`);
+        player.military += 12;
+      } else {
+        player.military += 30;
+        player.warWeariness += 6;
+        log(`${player.name} deploys additional troops to ongoing conflicts.`);
+      }
+      clampPlayerStats(player);
+      persistRooms();
+      renderGameBoard();
+    }
+
+    function applyRandomEvent(player) {
+      const events = [
+        {
+          test: () => Math.random() < 0.25,
+          run: () => {
+            const swing = Math.round(Math.random() * 8 + 4);
+            player.approval += swing;
+            log(`Opinion surge! Grassroots movements boost ${player.name}'s approval by ${swing}%.`);
+          }
+        },
+        {
+          test: () => Math.random() < 0.25,
+          run: () => {
+            const swing = Math.round(Math.random() * 9 + 3);
+            player.approval -= swing;
+            player.stability -= swing / 2;
+            log(`Scandal erupts! Approval drops ${swing}% and stability wavers.`);
+          }
+        },
+        {
+          test: () => player.wars.length && Math.random() < 0.4,
+          run: () => {
+            const war = player.wars[Math.floor(Math.random() * player.wars.length)];
+            war.front = Math.min(100, war.front + 7);
+            log(`Strategic maneuver succeeds against ${war.target}, advancing the front.`);
+          }
+        },
+        {
+          test: () => Math.random() < 0.2,
+          run: () => {
+            player.gdp += 150;
+            log(`Foreign investment pours in, increasing GDP by 150 credits.`);
+          }
+        },
+        {
+          test: () => Math.random() < 0.2,
+          run: () => {
+            const damage = 90;
+            player.treasury = Math.max(0, player.treasury - damage);
+            log(`Natural disaster strikes! Emergency relief costs ${damage} credits.`);
+          }
+        }
+      ];
+
+      events.forEach((event) => {
+        if (event.test()) {
+          event.run();
+        }
+      });
+    }
+
+    function log(message) {
+      if (!currentRoom) return;
+      currentRoom.log.push(`${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} — ${message}`);
+      currentRoom.log = currentRoom.log.slice(-120);
+      persistRooms();
+    }
+
+    function addPlayer() {
+      const name = roomElements.newPlayerName.value.trim();
+      const ideology = roomElements.newPlayerIdeology.value;
+      if (!name) {
+        alert("Provide a leader name.");
+        return;
+      }
+      if (currentRoom.players.some((player) => player.name.toLowerCase() === name.toLowerCase())) {
+        alert("Leader already exists in this room.");
+        return;
+      }
+      currentRoom.players.push(createBasePlayer(name, ideology));
+      roomElements.newPlayerName.value = "";
+      persistRooms();
+      renderRoom();
+      log(`${name} joins the leadership roster as a ${ideology}.`);
+    }
+
+    function startGame() {
+      if (!currentRoom.players.length) {
+        alert("Add at least one leader to start.");
+        return;
+      }
+      currentRoom.started = true;
+      currentRoom.turn = 1;
+      currentRoom.activePlayerIndex = 0;
+      currentPlayerIndex = 0;
+      persistRooms();
+      updateVisibility();
+      renderRoom();
+      renderGameBoard();
+      log(`Simulation launched. ${currentRoom.players[currentPlayerIndex].name} takes the first turn.`);
+    }
+
+    function forceSave() {
+      persistRooms();
+      log(`Manual save captured for room ${currentRoom.code}.`);
+      renderEventLog();
+    }
+
+    function resetRoom() {
+      const code = roomElements.roomCode.value.trim();
+      if (!code || !rooms[code]) {
+        alert("Provide an existing room code to reset.");
+        return;
+      }
+      if (!confirm(`Delete room ${code}? This cannot be undone.`)) {
+        return;
+      }
+      delete rooms[code];
+      persistRooms();
+      if (currentRoom && currentRoom.code === code) {
+        currentRoom = null;
+        currentPlayerIndex = 0;
+        updateVisibility();
+        roomElements.playerList.innerHTML = "";
+        roomElements.metrics.innerHTML = "";
+        roomElements.eventLog.innerHTML = "";
+        roomElements.activeWars.innerHTML = "";
+      }
+      alert(`Room ${code} cleared.`);
+    }
+
+    roomElements.createRoom.addEventListener("click", () => {
+      const code = roomElements.roomCode.value.trim().toUpperCase();
+      const leader = roomElements.leaderName.value.trim();
+      ensureRoom(code, leader, true);
+    });
+
+    roomElements.joinRoom.addEventListener("click", () => {
+      const code = roomElements.roomCode.value.trim().toUpperCase();
+      const leader = roomElements.leaderName.value.trim();
+      ensureRoom(code, leader, false);
+    });
+
+    roomElements.resetRoom.addEventListener("click", resetRoom);
+    roomElements.addPlayer.addEventListener("click", addPlayer);
+    roomElements.startGame.addEventListener("click", startGame);
+    roomElements.endTurn.addEventListener("click", resolveTurn);
+    roomElements.autosave.addEventListener("click", forceSave);
+    roomElements.deployTroops.addEventListener("click", deployTroops);
+    roomElements.negotiatePeace.addEventListener("click", negotiatePeace);
+
+    window.addEventListener("load", () => {
+      const codes = Object.keys(rooms);
+      if (codes.length) {
+        roomElements.roomCode.value = codes[0];
+      }
+      updateVisibility();
+    });
+  </script>
+</body>
+</html>
