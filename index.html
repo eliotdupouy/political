@@ -424,26 +424,56 @@
       width: 100%;
       height: auto;
       border-radius: 12px;
-      background: linear-gradient(180deg, rgba(56, 189, 248, 0.05), rgba(15, 23, 42, 0.65));
-      border: 1px solid rgba(56, 189, 248, 0.1);
+      background: linear-gradient(180deg, rgba(14, 165, 233, 0.08), rgba(15, 23, 42, 0.88));
+      border: 1px solid rgba(56, 189, 248, 0.12);
+      box-shadow: inset 0 0 35px rgba(15, 118, 110, 0.25);
+    }
+
+    .map-ocean {
+      fill: #031120;
+      pointer-events: none;
+    }
+
+    .map-graticule {
+      pointer-events: none;
+    }
+
+    .map-graticule line {
+      stroke: rgba(148, 163, 184, 0.18);
+      stroke-width: 0.7;
+      vector-effect: non-scaling-stroke;
+      stroke-dasharray: 4 8;
+    }
+
+    .map-land {
+      fill: rgba(148, 163, 184, 0.35);
+      stroke: rgba(226, 232, 240, 0.25);
+      stroke-width: 0.8;
+      vector-effect: non-scaling-stroke;
+      pointer-events: none;
+    }
+
+    .map-land[data-region="Antarctica"] {
+      fill: rgba(203, 213, 225, 0.28);
     }
 
     .country-shape {
-      fill: rgba(148, 163, 184, 0.35);
-      stroke: rgba(226, 232, 240, 0.2);
+      fill: rgba(148, 163, 184, 0.42);
+      stroke: rgba(226, 232, 240, 0.3);
       stroke-width: 1;
       cursor: pointer;
       transition: fill 0.2s ease, stroke 0.2s ease;
+      vector-effect: non-scaling-stroke;
     }
 
     .country-shape:hover {
-      fill: rgba(56, 189, 248, 0.5);
-      stroke: rgba(56, 189, 248, 0.85);
+      fill: rgba(56, 189, 248, 0.55);
+      stroke: rgba(56, 189, 248, 0.9);
     }
 
     .country-shape.selected {
-      fill: rgba(249, 115, 22, 0.55);
-      stroke: rgba(249, 115, 22, 0.9);
+      fill: rgba(249, 115, 22, 0.6);
+      stroke: rgba(249, 115, 22, 0.95);
     }
 
     #country-details {
@@ -606,13 +636,41 @@
         <div class="board-card" id="world-map-card">
           <h3>World Map</h3>
           <div class="map-wrapper">
-            <svg id="world-map" viewBox="0 0 800 400" role="img" aria-labelledby="map-title">
-              <title id="map-title">Global theatre overview</title>
-              <path class="country-shape" data-name="Auroran Union" d="M140 110 L240 95 L310 140 L290 200 L200 210 L150 180 Z"></path>
-              <path class="country-shape" data-name="Maridian Collective" d="M330 170 L420 150 L470 190 L460 250 L360 260 L320 210 Z"></path>
-              <path class="country-shape" data-name="Solis Republic" d="M480 120 L600 110 L640 160 L600 210 L500 200 Z"></path>
-              <path class="country-shape" data-name="Nordhavn Pact" d="M220 40 L340 30 L360 80 L300 110 L230 90 Z"></path>
-              <path class="country-shape" data-name="Kestrel Dominion" d="M520 230 L640 240 L690 300 L620 330 L500 300 Z"></path>
+            <svg
+              id="world-map"
+              viewBox="0 0 960 480"
+              role="img"
+              aria-labelledby="map-title"
+            >
+              <title id="map-title">Global theatre planisphere</title>
+              <desc>
+                Real-world equirectangular map with highlighted featured nations. Select a country to inspect its dossier.
+              </desc>
+              <rect class="map-ocean" x="0" y="0" width="960" height="480" rx="12" ry="12"></rect>
+              <g class="map-graticule" aria-hidden="true">
+                <line x1="80" y1="40" x2="80" y2="440"></line>
+                <line x1="160" y1="40" x2="160" y2="440"></line>
+                <line x1="240" y1="40" x2="240" y2="440"></line>
+                <line x1="320" y1="40" x2="320" y2="440"></line>
+                <line x1="400" y1="40" x2="400" y2="440"></line>
+                <line x1="480" y1="40" x2="480" y2="440"></line>
+                <line x1="560" y1="40" x2="560" y2="440"></line>
+                <line x1="640" y1="40" x2="640" y2="440"></line>
+                <line x1="720" y1="40" x2="720" y2="440"></line>
+                <line x1="800" y1="40" x2="800" y2="440"></line>
+                <line x1="880" y1="40" x2="880" y2="440"></line>
+                <line x1="60" y1="400" x2="900" y2="400"></line>
+                <line x1="60" y1="320" x2="900" y2="320"></line>
+                <line x1="60" y1="240" x2="900" y2="240"></line>
+                <line x1="60" y1="160" x2="900" y2="160"></line>
+                <line x1="60" y1="80" x2="900" y2="80"></line>
+              </g>
+              <g class="map-landmasses" id="land-layer" aria-label="Continents"></g>
+              <g
+                class="map-overlays"
+                id="country-layer"
+                aria-label="Featured playable countries"
+              ></g>
             </svg>
             <div id="country-details"></div>
           </div>
@@ -634,102 +692,807 @@
   <script>
     const nations = [
       {
-        id: "auroran",
-        name: "Auroran Union",
-        leader: "Chancellor Selene Vega",
-        ideology: "Social Democracy",
-        capital: "Helios Prime",
-        population: 92,
-        gdp: 3200,
-        military: 480,
-        strength: 260,
+        id: "canada",
+        name: "Canada",
+        leader: "Prime Minister Amelia Chen",
+        ideology: "Parliamentary Democracy",
+        capital: "Ottawa",
+        population: 38,
+        gdp: 1800,
+        military: 70,
+        strength: 180,
         color: "#38bdf8",
-        description: "A high-tech federation focused on social welfare and orbital trade routes.",
-        taxes: { income: 28, corporate: 24, tariffs: 10 },
+        description: "A resource-rich democracy balancing vast territories with modern innovation hubs.",
+        taxes: { income: 25, corporate: 26, tariffs: 5 },
         parliament: [
-          { name: "Progress Alliance", seats: 210, color: "#38bdf8" },
-          { name: "Civic Union", seats: 90, color: "#94a3b8" },
-          { name: "Renewal Greens", seats: 50, color: "#4ade80" }
+          { name: "Liberal Alliance", seats: 158, color: "#38bdf8" },
+          { name: "Conservative Bloc", seats: 120, color: "#60a5fa" },
+          { name: "Green Coalition", seats: 40, color: "#4ade80" }
         ]
       },
       {
-        id: "maridian",
-        name: "Maridian Collective",
-        leader: "Coordinator Imre Kade",
-        ideology: "Technocrat",
-        capital: "Axis City",
-        population: 74,
-        gdp: 2800,
-        military: 420,
-        strength: 220,
-        color: "#a855f7",
-        description: "A data-driven council state that leverages megacities and automation.",
-        taxes: { income: 24, corporate: 26, tariffs: 12 },
+        id: "united-states",
+        name: "United States",
+        leader: "President Jordan Reyes",
+        ideology: "Federal Republic",
+        capital: "Washington D.C.",
+        population: 331,
+        gdp: 21400,
+        military: 800,
+        strength: 320,
+        color: "#2563eb",
+        description: "An economic superpower wielding unmatched soft power and global military reach.",
+        taxes: { income: 24, corporate: 21, tariffs: 4 },
         parliament: [
-          { name: "Systems Forum", seats: 180, color: "#a855f7" },
-          { name: "Urban Bloc", seats: 110, color: "#38bdf8" },
-          { name: "Liberty Front", seats: 60, color: "#f97316" }
+          { name: "Unity Party", seats: 218, color: "#2563eb" },
+          { name: "Liberty Caucus", seats: 210, color: "#f97316" },
+          { name: "Progress Forum", seats: 7, color: "#a855f7" }
         ]
       },
       {
-        id: "solis",
-        name: "Solis Republic",
-        leader: "President Darius Holt",
-        ideology: "Liberal",
-        capital: "Radiant Bay",
-        population: 105,
-        gdp: 3600,
-        military: 510,
-        strength: 300,
-        color: "#fbbf24",
-        description: "A coastal republic championing free markets and maritime supremacy.",
-        taxes: { income: 22, corporate: 18, tariffs: 6 },
+        id: "mexico",
+        name: "Mexico",
+        leader: "President Sofía Marquez",
+        ideology: "Federal Republic",
+        capital: "Mexico City",
+        population: 128,
+        gdp: 1200,
+        military: 100,
+        strength: 200,
+        color: "#f59e0b",
+        description: "A growing manufacturing hub bridging North and Latin American trade routes.",
+        taxes: { income: 27, corporate: 25, tariffs: 9 },
         parliament: [
-          { name: "Liberty Coalition", seats: 160, color: "#fbbf24" },
-          { name: "Civic Moderates", seats: 120, color: "#38bdf8" },
-          { name: "People's Assembly", seats: 70, color: "#ef4444" }
+          { name: "National Renewal", seats: 250, color: "#f97316" },
+          { name: "Civic Movement", seats: 120, color: "#38bdf8" },
+          { name: "Social Alliance", seats: 80, color: "#ef4444" }
         ]
       },
       {
-        id: "nordhavn",
-        name: "Nordhavn Pact",
-        leader: "Marshal Anika Rykov",
-        ideology: "Conservative",
-        capital: "Frostholm",
-        population: 68,
-        gdp: 2500,
-        military: 460,
-        strength: 280,
-        color: "#60a5fa",
-        description: "An arctic alliance prioritising defense industries and resource security.",
-        taxes: { income: 26, corporate: 22, tariffs: 14 },
+        id: "brazil",
+        name: "Brazil",
+        leader: "President Laura Campos",
+        ideology: "Presidential Republic",
+        capital: "Brasília",
+        population: 213,
+        gdp: 1440,
+        military: 210,
+        strength: 230,
+        color: "#22c55e",
+        description: "South America's largest democracy balancing agribusiness, industry, and rainforest stewardship.",
+        taxes: { income: 28, corporate: 23, tariffs: 12 },
         parliament: [
-          { name: "Order League", seats: 190, color: "#60a5fa" },
-          { name: "Frontier Party", seats: 100, color: "#f97316" },
-          { name: "Labor Syndicate", seats: 60, color: "#ef4444" }
+          { name: "Workers Front", seats: 220, color: "#22c55e" },
+          { name: "Liberal Progress", seats: 150, color: "#60a5fa" },
+          { name: "Social Conservatives", seats: 70, color: "#f97316" }
         ]
       },
       {
-        id: "kestrel",
-        name: "Kestrel Dominion",
-        leader: "Regent Maia Corvo",
-        ideology: "Authoritarian",
-        capital: "Ironspire",
-        population: 88,
-        gdp: 3000,
-        military: 540,
+        id: "united-kingdom",
+        name: "United Kingdom",
+        leader: "Prime Minister Henry Clarke",
+        ideology: "Constitutional Monarchy",
+        capital: "London",
+        population: 67,
+        gdp: 2820,
+        military: 220,
+        strength: 250,
+        color: "#0ea5e9",
+        description: "A maritime power leveraging finance, culture, and alliances to project influence abroad.",
+        taxes: { income: 26, corporate: 25, tariffs: 5 },
+        parliament: [
+          { name: "Commons Unity", seats: 320, color: "#0ea5e9" },
+          { name: "Traditionalists", seats: 210, color: "#f97316" },
+          { name: "Reform Greens", seats: 40, color: "#4ade80" }
+        ]
+      },
+      {
+        id: "france",
+        name: "France",
+        leader: "President Camille Dubois",
+        ideology: "Semi-Presidential Republic",
+        capital: "Paris",
+        population: 65,
+        gdp: 2700,
+        military: 205,
         strength: 240,
-        color: "#f97316",
-        description: "An expansionist regime controlling key desert trade corridors.",
-        taxes: { income: 30, corporate: 28, tariffs: 18 },
+        color: "#ef4444",
+        description: "A central European power balancing social welfare with global commitments and cultural diplomacy.",
+        taxes: { income: 29, corporate: 28, tariffs: 7 },
         parliament: [
-          { name: "Dominion Council", seats: 150, color: "#f97316" },
-          { name: "Security Directorate", seats: 130, color: "#ef4444" },
-          { name: "Meridian Forum", seats: 70, color: "#38bdf8" }
+          { name: "Republic Forward", seats: 250, color: "#ef4444" },
+          { name: "Republican Right", seats: 150, color: "#f97316" },
+          { name: "Green Left", seats: 80, color: "#22c55e" }
+        ]
+      },
+      {
+        id: "germany",
+        name: "Germany",
+        leader: "Chancellor Lukas Feld",
+        ideology: "Federal Parliamentary Republic",
+        capital: "Berlin",
+        population: 83,
+        gdp: 3800,
+        military: 190,
+        strength: 260,
+        color: "#facc15",
+        description: "Europe's industrial engine driving innovation, export surpluses, and continental leadership.",
+        taxes: { income: 27, corporate: 29, tariffs: 6 },
+        parliament: [
+          { name: "Union Alliance", seats: 245, color: "#facc15" },
+          { name: "Social Forum", seats: 206, color: "#38bdf8" },
+          { name: "Freedom Greens", seats: 120, color: "#22c55e" }
+        ]
+      },
+      {
+        id: "russia",
+        name: "Russia",
+        leader: "President Tatiana Volkov",
+        ideology: "Semi-Presidential Federation",
+        capital: "Moscow",
+        population: 146,
+        gdp: 1700,
+        military: 610,
+        strength: 300,
+        color: "#f87171",
+        description: "A vast federation leveraging energy exports and military weight to influence its near abroad.",
+        taxes: { income: 20, corporate: 20, tariffs: 15 },
+        parliament: [
+          { name: "Unity Party", seats: 340, color: "#f87171" },
+          { name: "Patriot Front", seats: 120, color: "#f97316" },
+          { name: "Civic Opposition", seats: 90, color: "#38bdf8" }
+        ]
+      },
+      {
+        id: "china",
+        name: "China",
+        leader: "Chair Li Wen",
+        ideology: "Single-Party State",
+        capital: "Beijing",
+        population: 1440,
+        gdp: 14700,
+        military: 750,
+        strength: 340,
+        color: "#f43f5e",
+        description: "An economic juggernaut balancing rapid urbanisation with global Belt and Road ambitions.",
+        taxes: { income: 22, corporate: 25, tariffs: 10 },
+        parliament: [
+          { name: "Central Committee", seats: 680, color: "#f43f5e" },
+          { name: "Technocratic Forum", seats: 220, color: "#a855f7" },
+          { name: "Regional Council", seats: 120, color: "#22c55e" }
+        ]
+      },
+      {
+        id: "india",
+        name: "India",
+        leader: "Prime Minister Kavya Patel",
+        ideology: "Parliamentary Republic",
+        capital: "New Delhi",
+        population: 1380,
+        gdp: 2870,
+        military: 620,
+        strength: 310,
+        color: "#f59e0b",
+        description: "A burgeoning democracy managing vast diversity while driving technology and services growth.",
+        taxes: { income: 23, corporate: 22, tariffs: 11 },
+        parliament: [
+          { name: "National Congress", seats: 290, color: "#f59e0b" },
+          { name: "Federal Alliance", seats: 180, color: "#2563eb" },
+          { name: "People's Front", seats: 70, color: "#22c55e" }
+        ]
+      },
+      {
+        id: "australia",
+        name: "Australia",
+        leader: "Prime Minister Sienna Ward",
+        ideology: "Parliamentary Democracy",
+        capital: "Canberra",
+        population: 25,
+        gdp: 1390,
+        military: 80,
+        strength: 200,
+        color: "#0ea5e9",
+        description: "An Indo-Pacific middle power safeguarding sea lanes and mineral exports across the region.",
+        taxes: { income: 27, corporate: 30, tariffs: 6 },
+        parliament: [
+          { name: "Labor Coalition", seats: 76, color: "#ef4444" },
+          { name: "Liberal Alliance", seats: 65, color: "#0ea5e9" },
+          { name: "Greens", seats: 15, color: "#22c55e" }
         ]
       }
     ];
 
+    const mapDimensions = { width: 960, height: 480 };
+
+    const landPolygons = [
+      {
+        name: "North America",
+        rings: [
+          [
+            [-168, 72],
+            [-158, 71],
+            [-150, 66],
+            [-142, 63],
+            [-135, 60],
+            [-130, 54],
+            [-124, 50],
+            [-120, 47],
+            [-123, 42],
+            [-122, 38],
+            [-118, 34],
+            [-114, 32],
+            [-108, 30],
+            [-104, 29],
+            [-100, 27],
+            [-96, 25],
+            [-90, 24],
+            [-83, 24],
+            [-79, 26],
+            [-76, 30],
+            [-74, 34],
+            [-72, 38],
+            [-70, 43],
+            [-65, 46],
+            [-60, 52],
+            [-56, 56],
+            [-60, 60],
+            [-68, 63],
+            [-80, 66],
+            [-95, 68],
+            [-110, 70],
+            [-125, 72],
+            [-140, 73],
+            [-155, 73],
+            [-168, 72]
+          ]
+        ]
+      },
+      {
+        name: "South America",
+        rings: [
+          [
+            [-81, 12],
+            [-76, 8],
+            [-74, 4],
+            [-72, -2],
+            [-70, -8],
+            [-68, -14],
+            [-67, -20],
+            [-66, -26],
+            [-64, -32],
+            [-60, -38],
+            [-56, -44],
+            [-52, -50],
+            [-48, -54],
+            [-44, -52],
+            [-40, -46],
+            [-38, -40],
+            [-36, -32],
+            [-38, -20],
+            [-44, -10],
+            [-50, -4],
+            [-58, 2],
+            [-65, 6],
+            [-72, 10],
+            [-78, 12],
+            [-81, 12]
+          ]
+        ]
+      },
+      {
+        name: "Europe",
+        rings: [
+          [
+            [-25, 71],
+            [-15, 72],
+            [-5, 70],
+            [5, 69],
+            [12, 67],
+            [20, 66],
+            [28, 62],
+            [32, 58],
+            [38, 54],
+            [42, 50],
+            [42, 45],
+            [38, 42],
+            [30, 42],
+            [22, 41],
+            [16, 43],
+            [10, 45],
+            [4, 47],
+            [-2, 50],
+            [-6, 54],
+            [-10, 58],
+            [-18, 62],
+            [-24, 66],
+            [-25, 71]
+          ]
+        ]
+      },
+      {
+        name: "Asia",
+        rings: [
+          [
+            [25, 70],
+            [35, 74],
+            [50, 75],
+            [65, 75],
+            [80, 76],
+            [95, 78],
+            [112, 76],
+            [128, 72],
+            [145, 70],
+            [160, 66],
+            [170, 58],
+            [168, 50],
+            [158, 43],
+            [148, 36],
+            [140, 28],
+            [134, 18],
+            [126, 10],
+            [120, 5],
+            [118, -2],
+            [112, -6],
+            [104, -5],
+            [100, 0],
+            [96, 8],
+            [98, 18],
+            [108, 24],
+            [118, 28],
+            [126, 34],
+            [130, 40],
+            [128, 48],
+            [120, 54],
+            [108, 58],
+            [94, 60],
+            [80, 58],
+            [68, 52],
+            [58, 46],
+            [52, 40],
+            [48, 34],
+            [48, 28],
+            [52, 24],
+            [54, 18],
+            [50, 14],
+            [44, 16],
+            [40, 22],
+            [36, 30],
+            [32, 40],
+            [30, 50],
+            [28, 60],
+            [25, 70]
+          ],
+          [
+            [132, 20],
+            [140, 18],
+            [146, 22],
+            [150, 28],
+            [152, 34],
+            [150, 40],
+            [142, 42],
+            [136, 38],
+            [132, 32],
+            [132, 20]
+          ]
+        ]
+      },
+      {
+        name: "Africa",
+        rings: [
+          [
+            [-17, 37],
+            [-5, 35],
+            [8, 37],
+            [16, 34],
+            [24, 34],
+            [32, 32],
+            [38, 28],
+            [44, 22],
+            [50, 16],
+            [52, 10],
+            [48, 6],
+            [42, 4],
+            [38, 0],
+            [34, -6],
+            [32, -12],
+            [30, -18],
+            [26, -24],
+            [22, -30],
+            [18, -34],
+            [14, -36],
+            [10, -34],
+            [6, -30],
+            [2, -24],
+            [-2, -16],
+            [-6, -6],
+            [-10, 2],
+            [-14, 10],
+            [-16, 20],
+            [-17, 28],
+            [-17, 37]
+          ]
+        ]
+      },
+      {
+        name: "Middle East",
+        rings: [
+          [
+            [32, 36],
+            [38, 34],
+            [44, 34],
+            [50, 32],
+            [54, 28],
+            [56, 24],
+            [54, 18],
+            [50, 16],
+            [46, 18],
+            [42, 22],
+            [38, 26],
+            [34, 30],
+            [32, 36]
+          ]
+        ]
+      },
+      {
+        name: "Australia",
+        rings: [
+          [
+            [113, -11],
+            [125, -13],
+            [134, -18],
+            [140, -22],
+            [147, -27],
+            [151, -32],
+            [148, -37],
+            [140, -40],
+            [131, -42],
+            [124, -37],
+            [118, -32],
+            [114, -24],
+            [113, -17],
+            [113, -11]
+          ]
+        ]
+      },
+      {
+        name: "Greenland",
+        rings: [
+          [
+            [-54, 83],
+            [-44, 82],
+            [-38, 79],
+            [-34, 75],
+            [-38, 72],
+            [-46, 72],
+            [-54, 74],
+            [-60, 78],
+            [-58, 81],
+            [-54, 83]
+          ]
+        ]
+      },
+      {
+        name: "Antarctica",
+        rings: [
+          [
+            [-180, -60],
+            [-150, -62],
+            [-120, -64],
+            [-90, -66],
+            [-60, -68],
+            [-30, -70],
+            [0, -71],
+            [30, -70],
+            [60, -68],
+            [90, -66],
+            [120, -64],
+            [150, -62],
+            [180, -60],
+            [180, -72],
+            [120, -74],
+            [60, -76],
+            [0, -77],
+            [-60, -76],
+            [-120, -74],
+            [-180, -72],
+            [-180, -60]
+          ]
+        ]
+      },
+      {
+        name: "Japan",
+        rings: [
+          [
+            [134, 45],
+            [140, 44],
+            [145, 41],
+            [145, 36],
+            [140, 32],
+            [136, 34],
+            [134, 38],
+            [134, 45]
+          ]
+        ]
+      },
+      {
+        name: "Madagascar",
+        rings: [
+          [
+            [48, -12],
+            [50, -15],
+            [51, -20],
+            [49, -24],
+            [47, -22],
+            [45, -18],
+            [46, -14],
+            [48, -12]
+          ]
+        ]
+      }
+    ];
+
+    const countryPolygons = {
+      Canada: {
+        rings: [
+          [
+            [-141, 70],
+            [-120, 72],
+            [-105, 70],
+            [-90, 68],
+            [-78, 62],
+            [-80, 58],
+            [-90, 55],
+            [-105, 54],
+            [-120, 56],
+            [-134, 60],
+            [-140, 65],
+            [-141, 70]
+          ]
+        ]
+      },
+      "United States": {
+        rings: [
+          [
+            [-125, 49],
+            [-95, 49],
+            [-82, 45],
+            [-74, 40],
+            [-80, 36],
+            [-82, 31],
+            [-88, 29],
+            [-95, 29],
+            [-102, 30],
+            [-110, 32],
+            [-114, 34],
+            [-118, 37],
+            [-122, 41],
+            [-125, 44],
+            [-125, 49]
+          ]
+        ]
+      },
+      Mexico: {
+        rings: [
+          [
+            [-117, 32],
+            [-112, 30],
+            [-108, 27],
+            [-104, 24],
+            [-100, 20],
+            [-96, 20],
+            [-94, 18],
+            [-92, 16],
+            [-95, 14],
+            [-99, 16],
+            [-104, 18],
+            [-108, 21],
+            [-110, 24],
+            [-114, 28],
+            [-117, 32]
+          ]
+        ]
+      },
+      Brazil: {
+        rings: [
+          [
+            [-74, 5],
+            [-70, -2],
+            [-68, -8],
+            [-66, -14],
+            [-65, -20],
+            [-64, -26],
+            [-60, -30],
+            [-56, -34],
+            [-52, -40],
+            [-50, -46],
+            [-46, -50],
+            [-42, -44],
+            [-40, -36],
+            [-42, -24],
+            [-46, -14],
+            [-52, -8],
+            [-58, -4],
+            [-64, 0],
+            [-70, 3],
+            [-74, 5]
+          ]
+        ]
+      },
+      "United Kingdom": {
+        rings: [
+          [
+            [-8, 59],
+            [-4, 58],
+            [-2, 56],
+            [-2, 54],
+            [-4, 52],
+            [-6, 51],
+            [-8, 52],
+            [-8, 55],
+            [-8, 59]
+          ]
+        ]
+      },
+      France: {
+        rings: [
+          [
+            [-5, 51],
+            [2, 51],
+            [6, 49],
+            [7, 46],
+            [5, 43],
+            [1, 43],
+            [-2, 45],
+            [-4, 48],
+            [-5, 51]
+          ]
+        ]
+      },
+      Germany: {
+        rings: [
+          [
+            [5, 55],
+            [13, 55],
+            [15, 52],
+            [14, 48],
+            [10, 47],
+            [7, 48],
+            [6, 52],
+            [5, 55]
+          ]
+        ]
+      },
+      Russia: {
+        rings: [
+          [
+            [30, 70],
+            [45, 72],
+            [60, 74],
+            [80, 76],
+            [100, 76],
+            [120, 72],
+            [140, 70],
+            [155, 66],
+            [165, 60],
+            [160, 54],
+            [150, 50],
+            [135, 50],
+            [120, 52],
+            [100, 54],
+            [80, 54],
+            [60, 54],
+            [50, 58],
+            [40, 60],
+            [32, 64],
+            [30, 70]
+          ]
+        ]
+      },
+      China: {
+        rings: [
+          [
+            [75, 53],
+            [88, 54],
+            [102, 50],
+            [114, 46],
+            [120, 40],
+            [118, 34],
+            [112, 30],
+            [106, 26],
+            [100, 24],
+            [94, 20],
+            [90, 18],
+            [84, 22],
+            [80, 30],
+            [78, 40],
+            [75, 48],
+            [75, 53]
+          ]
+        ]
+      },
+      India: {
+        rings: [
+          [
+            [68, 32],
+            [76, 28],
+            [84, 26],
+            [90, 22],
+            [92, 18],
+            [88, 12],
+            [82, 10],
+            [76, 12],
+            [72, 18],
+            [70, 24],
+            [68, 32]
+          ]
+        ]
+      },
+      Australia: {
+        rings: [
+          [
+            [113, -11],
+            [128, -14],
+            [138, -20],
+            [146, -26],
+            [150, -31],
+            [146, -36],
+            [138, -39],
+            [130, -39],
+            [122, -35],
+            [116, -30],
+            [113, -23],
+            [113, -17],
+            [113, -11]
+          ]
+        ]
+      }
+    };
+
+    function projectPoint([lon, lat]) {
+      const x = ((lon + 180) / 360) * mapDimensions.width;
+      const y = ((90 - lat) / 180) * mapDimensions.height;
+      return [Number(x.toFixed(1)), Number(y.toFixed(1))];
+    }
+
+    function ringToPath(ring) {
+      return (
+        ring
+          .map((point, index) => {
+            const [x, y] = projectPoint(point);
+            return `${index === 0 ? "M" : "L"}${x},${y}`;
+          })
+          .join(" ") + " Z"
+      );
+    }
+
+    function polygonToPath(rings) {
+      return rings.map(ringToPath).join(" ");
+    }
+
+    function buildPlanisphere() {
+      const svg = roomElements.worldMap;
+      if (!svg) return;
+      const landLayer = svg.querySelector("#land-layer");
+      const overlayLayer = svg.querySelector("#country-layer");
+      if (!landLayer || !overlayLayer) return;
+      const ns = "http://www.w3.org/2000/svg";
+      landLayer.innerHTML = "";
+      landPolygons.forEach((mass) => {
+        const path = document.createElementNS(ns, "path");
+        path.setAttribute("class", "map-land");
+        path.setAttribute("data-region", mass.name);
+        path.setAttribute("d", polygonToPath(mass.rings));
+        landLayer.appendChild(path);
+      });
+      overlayLayer.innerHTML = "";
+      Object.entries(countryPolygons).forEach(([name, geometry]) => {
+        const path = document.createElementNS(ns, "path");
+        path.setAttribute("class", "country-shape");
+        path.setAttribute("data-name", name);
+        path.setAttribute("d", polygonToPath(geometry.rings));
+        overlayLayer.appendChild(path);
+      });
+    }
     const policyActions = [
       {
         id: "raiseTaxes",
@@ -1777,6 +2540,7 @@
       if (codes.length) {
         roomElements.roomCode.value = codes[0];
       }
+      buildPlanisphere();
       setupWorldMap();
       updateVisibility();
     });
